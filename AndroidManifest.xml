@@ -24,22 +24,21 @@
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                    <data android:scheme="LiplisAndroidRenew"/>
+                <data android:scheme="LiplisAndroidRenew"/>
             </intent-filter>
         </receiver>
-        <receiver android:label="Liplis Lili Renew 2×2" android:name=".Widget.LiplisWidgetNormal"><intent-filter>
+        <receiver android:label="Liplis Lili Renew 2×2" android:name=".Widget.LiplisWidgetNormal">
+            <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/lipliswidget" />
-        </receiver>
-        <receiver android:label="Liplis Lili Renew 2×2" android:name=".Widget.LiplisWidgetNormal">
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                    <data android:scheme="LiplisAndroidRenew"/>
+                <data android:scheme="LiplisAndroidRenew"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -50,8 +49,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/lipliswidgetlarge"></meta-data>
-        </receiver>
-        <receiver android:name=".Widget.LiplisWidgetLarge" android:label="Liplis Lili Renew 4×2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
                 <data android:scheme="LiplisAndroidRenew2"></data>
@@ -69,9 +66,9 @@
         <activity android:name=".Activity.LiplisWidgetChat" android:theme="@android:style/Theme.Translucent"></activity>
 
     </application>
-<supports-screens
-	android:smallScreens="true"
-	android:normalScreens="true"
-	android:largeScreens="true"
-	android:anyDensity="true" />
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true" />
 </manifest>

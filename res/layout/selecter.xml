@@ -586,7 +586,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llBlackLine7"
+                android:id="@+id/llBlackLine11"
                 android:layout_width="fill_parent"
                 android:layout_height="2sp"
                 android:background="@color/black"
@@ -602,7 +602,7 @@
                 android:textColor="@color/black" />
 
             <LinearLayout
-                android:id="@+id/llSpase10"
+                android:id="@+id/llSpase12"
                 android:layout_width="fill_parent"
                 android:layout_height="5sp"
                 android:orientation="horizontal"
@@ -713,7 +713,7 @@
     </ScrollView>
 
     <LinearLayout android:layout_width="fill_parent" android:layout_marginTop="-60sp" android:layout_height="60sp" android:orientation="horizontal" android:id="@+id/llButton" android:padding="5dip">
-        <LinearLayout android:layout_height="wrap_content" android:id="@+id/llButton" android:orientation="horizontal" android:gravity="left" android:layout_gravity="left" android:layout_width="fill_parent">
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/llButton2" android:orientation="horizontal" android:gravity="left" android:layout_gravity="left" android:layout_width="fill_parent">
 
             <Button
                 android:id="@+id/btnSelectClose"
