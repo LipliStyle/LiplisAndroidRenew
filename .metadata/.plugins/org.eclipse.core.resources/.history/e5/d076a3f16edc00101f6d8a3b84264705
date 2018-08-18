@@ -1,0 +1,25 @@
+//=======================================================================
+//  ClassName : LiplisException
+//  概要      : リプリスエクセプション
+//
+//	例外発生のクラスとメソッド名を追加して返す。(簡易スタックとレースとする)
+//
+//	extends   : 
+//	impliments: 	
+//
+//  LiplisAndroidシステム      
+//  Copyright(c) 2011-2011 sachin. All Rights Reserved. 
+//=======================================================================
+package little.cute.Exception;
+
+public class LiplisException extends Exception {
+	
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : コンストラクター
+    /// </summary>
+	public LiplisException(String className, String methodName, String details, Throwable throwable)
+	{
+		super(className + ":" + methodName + ":" + details,throwable);
+	}
+}

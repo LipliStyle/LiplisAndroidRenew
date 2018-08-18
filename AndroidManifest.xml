@@ -1,74 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="little.cute.renew" android:versionName="4.5.4" android:versionCode="39">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="9"></uses-sdk>
+    package="com.mamlambo.imageswidget"
+    android:versionCode="1"
+    android:versionName="1.0">
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:finishOnTaskLaunch = "true" android:name=".Obj.ObjLpsBean">
+        android:debuggable="true">
         <activity
-            android:label="@string/app_name" android:name=".Activity.LiplisWidgetIntroduction">
+            android:name=".ImagesWidgetConfiguration"
+            android:label="@string/app_name">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"></category>
-                <action android:name="android.intent.action.MAIN"></action>
+                <action
+                    android:name="android.intent.action.MAIN" />
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"></action>
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LiplisWidgetConfiguration"></activity>
-        <activity android:name=".Activity.LiplisWidgetLog"></activity>
-        <receiver android:name=".Widget.LiplisWidget">
-            <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <data android:scheme="LiplisAndroidRenew"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:label="Liplis Lili Renew 2×2" android:name=".Widget.LiplisWidgetNormal">
+        <receiver
+            android:name="ImagesWidgetProvider">
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/lipliswidget" />
+                android:resource="@xml/imageswidget_info" />
+        </receiver>
+        <receiver
+            android:name="ImagesWidgetProvider">
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <data android:scheme="LiplisAndroidRenew"/>
+                    <data android:scheme="images_widget" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/lipliswidget" />
+                android:resource="@xml/imageswidget_info" />
         </receiver>
-        <receiver android:name=".Widget.LiplisWidgetLarge" android:label="Liplis Lili Renew 4×2">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/lipliswidgetlarge"></meta-data>
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
-                <data android:scheme="LiplisAndroidRenew2"></data>
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/lipliswidgetlarge"></meta-data>
-        </receiver>
-        <activity android:name=".Activity.LiplisWidgeSelecter"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationTwitter"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationTwitterRegist"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationTwitterUserRegist"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationTopic"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationRssUrlRegist"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationVoice"></activity>
-        <activity android:name=".Activity.LiplisWidgetConfigurationSearchSettingRegist"></activity>
-        <activity android:name=".Activity.LiplisWidgetChat" android:theme="@android:style/Theme.Translucent"></activity>
-
     </application>
-    <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:anyDensity="true" />
+    <uses-sdk
+        android:minSdkVersion="3" />
 </manifest>

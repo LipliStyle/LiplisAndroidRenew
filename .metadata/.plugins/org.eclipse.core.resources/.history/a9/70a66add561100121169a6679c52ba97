@@ -1,0 +1,159 @@
+//=======================================================================
+//  ClassName : LiplisWidgetLog
+//  概要      : リプリスの発言ログ
+//
+//	extends   : Activity
+//	impliments:
+//
+//	レイアウトファイル : liplislog.xml
+//
+//  LiplisAndroidシステム
+//  Copyright(c) 2011-2011 sachin. All Rights Reserved.
+//=======================================================================
+package little.cute.Activity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import little.cute.R;
+import little.cute.Common.LiplisDefine;
+import little.cute.Obj.ObjLiplisCharacter;
+import little.cute.Obj.ObjLiplisLog;
+import little.cute.Obj.ObjLiplisLogList;
+import little.cute.View.LiplisLogListView.LiplisArrayAdapter;
+import little.cute.View.LiplisLogListView.LiplisViewListItem;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class LiplisWidgetChar  extends Activity{
+
+	private static ObjLiplisLogList ol;
+	private static List<ObjLiplisCharacter> charList;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	//親クラスの
+        super.onCreate(savedInstanceState);
+
+        //レイアウトのセット
+        setContentView(R.layout.liplischar);
+
+        //クローズボタンのセット
+        setCloseButton();
+
+        //リストビューの初期化
+        setListView();
+    }
+
+  /// <summary>
+    /// getLogObject
+    /// 渡されたログオブジェクトを取得する
+    /// </summary>
+    private List<ObjLiplisLog> getLogObject()
+    {
+    	ol = new ObjLiplisLogList();
+    	Bundle extras=getIntent().getExtras();
+    	if (extras!=null) {
+    		ol = (ObjLiplisLogList)extras.getSerializable("LOGLIST");
+    		return ol.getLogList();
+    	}
+    	else
+    	{
+    		return new ArrayList<ObjLiplisLog>();
+    	}
+    }
+
+    /// <summary>
+    /// setCloseButton
+    /// クローズボタンのハンドらセット
+    /// </summary>
+    private void setCloseButton()
+    {
+        //ボタンの配置
+        Button closeButton = (Button) findViewById(R.id.btnCharClose);
+
+        //クリックリスナーの作成
+        closeButton.setOnClickListener(new OnClickListener() {
+		  	//クリックイベント
+			public void onClick(View v) {
+				finish();
+		    }
+		});
+    }
+
+    /// <summary>
+    /// setListView
+    /// リストビューの初期化
+    /// </summary>
+    private void setListView()
+    {
+    	ArrayList<LiplisViewListItem> data = new ArrayList<LiplisViewListItem>();
+    	LiplisArrayAdapter adapter;
+
+    	charList = new 	ArrayList<ObjLiplisCharacter>();
+
+    	 //PackageManagerのオブジェクトを取得
+        PackageManager pm = this.getPackageManager();
+
+        //インストール済パッケージ情報を取得する
+        List<ApplicationInfo> list = pm.getInstalledApplications(0);
+
+        //パッケージ名を回し、パッケージ名「little.pretty」で始まるものだけを抽出
+        for (ApplicationInfo ai : list) {
+        	if(ai.packageName.startsWith(LiplisDefine.CHAR_PACKAGE))
+        	{
+        		charList.add(new ObjLiplisCharacter(ai.packageName,ai.packageName));
+        	}
+        }
+
+        //キャラクターリストが0ならトーストして終了
+        if(charList.size() <1)
+        {
+        	 Toast.makeText(this, LiplisDefine.MSSAGE_CHAR_NOT_FOUND, Toast.LENGTH_SHORT).show();
+        	 finish();
+        	 return;
+        }
+
+
+        //ひとまず表示用にパッケージ名だけ出力しておく
+        for (ObjLiplisCharacter oc : charList) {
+        	data.add(0, new LiplisViewListItem(oc.getCharName()));
+        }
+
+        // アイテムを追加します
+        adapter = new LiplisArrayAdapter(this, 0, data);
+
+        ListView listView = (ListView) findViewById(R.id.lstChar);
+
+        // アダプターを設定します
+        listView.setAdapter(adapter);
+
+        // リストビューのアイテムがクリックされた時に呼び出されるコールバックリスナーを登録します
+        //クリックされたら交代処理
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+//
+//            	//ログの取得
+//            	ObjLiplisLog oll = ol.getLog(loglist.size() - position - 1);
+//
+//            	//タイプの判定
+//            	if(oll.getType() == 1)
+//            	{
+//            		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(oll.getUrl())));
+//            	}
+//
+//            }
+//        });
+
+    }
+}

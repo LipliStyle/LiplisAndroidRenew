@@ -1,0 +1,276 @@
+what,kind,bundleId,bundleVersion,description,time
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664012052
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664015302
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664016826
+executed,command,org.eclipse.ui.ide,3.6.2.M20101201-0800,"org.eclipse.ui.project.cleanAction",1349664016838
+error,log,,,"LiplisAndroid does not exist",1349664016839
+error,log,,,"configuration.xml: error!",1349664017881
+error,log,,,"configuration.xml: error!",1349664018616
+activated,view,org.eclipse.ui.ide,3.6.2.M20101201-0800,"org.eclipse.ui.views.ProblemView",1349664022257
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664024858
+activated,view,org.eclipse.ui.ide,3.6.2.M20101201-0800,"org.eclipse.ui.views.ProblemView",1349664029519
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664046621
+activated,view,org.eclipse.ui.ide,3.6.2.M20101201-0800,"org.eclipse.ui.views.ProblemView",1349664050614
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349664053258
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664055204
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664215209
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664216506
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664253312
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664256708
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664257553
+error,log,,,"LiplisAndroid does not exist",1349664257565
+executed,command,org.eclipse.ui.ide,3.6.2.M20101201-0800,"org.eclipse.ui.project.cleanAction",1349664257565
+error,log,,,"configuration.xml: error!",1349664257908
+error,log,,,"configuration.xml: error!",1349664259362
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664262970
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664266304
+started,bundle,org.eclipse.epp.usagedata.ui,1.3.1.R201102081640,"org.eclipse.epp.usagedata.ui",1349664266318
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664266707
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664268426
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664289070
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349664314319
+started,bundle,org.eclipse.mylyn.java.tasks,3.4.0.v20100608-0100-e3x,"org.eclipse.mylyn.java.tasks",1349664314507
+started,bundle,org.eclipse.wst.html.ui,1.0.504.v201101122108,"org.eclipse.wst.html.ui",1349664314513
+error,log,,,"liplisnoralis.xml: error!",1349664315970
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664316121
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349664326446
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349664331381
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664332368
+opened,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664354689
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664354744
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664359200
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664360766
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664371476
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349664382946
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664384253
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349664389376
+error,log,,,"liplisnoralis.xml: error!",1349664397215
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664413699
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349664416848
+error,log,,,"liplisnoralis.xml: error!",1349664424673
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664453722
+error,log,,,"liplisnoralis.xml: error!",1349664457283
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349664457392
+error,log,,,"liplisnoralis.xml: error!",1349664458678
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349664458778
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664471833
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349664474895
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664482810
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664485961
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664486079
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664487328
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349664487616
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349664487669
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664513212
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664518568
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664523071
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664524607
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664524719
+closed,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664524811
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664528439
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664530699
+closed,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664530734
+opened,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664531513
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664531736
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664535402
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349664539543
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664609683
+opened,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664609970
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664610116
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664610179
+opened,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664618673
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664618789
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664622879
+opened,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664623500
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664623614
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664623640
+opened,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664625173
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664625290
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664715927
+error,log,,,"controller.xml: error!",1349664716248
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664716368
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664716509
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664778774
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664785416
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664785577
+error,log,,,"controller.xml: error!",1349664787435
+error,log,,,"controller.xml: error!",1349664788595
+error,log,,,"controller.xml: error!",1349664788823
+error,log,,,"controller.xml: error!",1349664788836
+error,log,,,"controller.xml: IllegalStateException: ScrollView can host only one direct child",1349664788838
+error,log,,,"controller.xml: error!",1349664791953
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349664792091
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664802282
+error,log,,,"controller.xml: error!",1349664804706
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664818000
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664839615
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664842310
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664845546
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664846491
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664846639
+closed,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664846640
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664848392
+error,log,,,"controller.xml: error!",1349664850015
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664850114
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664850257
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664852831
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664857375
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664859462
+error,log,,,"controller.xml: error!",1349664864396
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349664871277
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664880548
+error,log,,,"controller.xml: error!",1349664888442
+error,log,,,"controller.xml: error!",1349664888611
+error,log,,,"controller.xml: error!",1349664891260
+error,log,,,"controller.xml: error!",1349664891432
+error,log,,,"controller.xml: error!",1349664891443
+error,log,,,"controller.xml: IllegalStateException: ScrollView can host only one direct child",1349664891445
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664900019
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349664900890
+activated,editor,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.CompilationUnitEditor",1349664901044
+closed,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664901044
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664902216
+error,log,,,"controller.xml: error!",1349664903951
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664904054
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664904198
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664906447
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664910646
+error,log,,,"controller.xml: error!",1349664912235
+error,log,,,"controller.xml: error!",1349664912413
+error,log,,,"controller.xml: error!",1349664912651
+error,log,,,"controller.xml: error!",1349664912859
+error,log,,,"controller.xml: error!",1349664912870
+error,log,,,"controller.xml: IllegalStateException: ScrollView can host only one direct child",1349664912872
+error,log,,,"controller.xml: error!",1349664922624
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349664922747
+error,log,,,"controller.xml: error!",1349664924016
+error,log,,,"controller.xml: error!",1349664924026
+error,log,,,"controller.xml: IllegalStateException: ScrollView can host only one direct child",1349664924028
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349664924051
+error,log,,,"controller.xml: error!",1349664924710
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349664924825
+error,log,,,"controller.xml: error!",1349664931372
+error,log,,,"controller.xml: error!",1349664931554
+error,log,,,"controller.xml: error!",1349664933526
+error,log,,,"controller.xml: error!",1349664933704
+error,log,,,"controller.xml: error!",1349664933872
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664939416
+error,log,,,"controller.xml: error!",1349664939541
+error,log,,,"controller.xml: error!",1349664940064
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349664941751
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664953390
+error,log,,,"controller.xml: error!",1349664953656
+error,log,,,"controller.xml: error!",1349664954360
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664956172
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664957626
+error,log,,,"controller.xml: error!",1349664957736
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664963430
+error,log,,,"controller.xml: error!",1349664963566
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664979178
+error,log,,,"controller.xml: error!",1349664979289
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664980754
+error,log,,,"controller.xml: error!",1349664980777
+opened,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664986289
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349664986434
+error,log,,,"configuration.xml: error!",1349664988326
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349664994187
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349664995985
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349664996697
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665004208
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665006517
+error,log,,,"controller.xml: error!",1349665007679
+error,log,,,"controller.xml: error!",1349665007994
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349665008111
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665014203
+error,log,,,"controller.xml: error!",1349665014315
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665020371
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665022399
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665028819
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665033123
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349665034025
+error,log,,,"controller.xml: error!",1349665034723
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349665034887
+error,log,,,"controller.xml: error!",1349665038487
+error,log,,,"controller.xml: error!",1349665038738
+error,log,,,"controller.xml: error!",1349665038873
+error,log,,,"controller.xml: error!",1349665040509
+error,log,,,"controller.xml: error!",1349665042001
+error,log,,,"controller.xml: error!",1349665047054
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665050515
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665053505
+error,log,,,"controller.xml: error!",1349665053603
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349665053906
+error,log,,,"controller.xml: error!",1349665056577
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349665056743
+error,log,,,"controller.xml: error!",1349665057516
+error,log,,,"controller.xml: error!",1349665060963
+error,log,,,"controller.xml: error!",1349665061202
+error,log,,,"controller.xml: error!",1349665061337
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665062299
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665064252
+error,log,,,"controller.xml: error!",1349665064374
+error,log,,,"controller.xml: error!",1349665065690
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665067577
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349665070666
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665071333
+error,log,,,"controller.xml: error!",1349665071340
+error,log,,,"controller.xml: error!",1349665071477
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665073043
+error,log,,,"controller.xml: error!",1349665080532
+error,log,,,"controller.xml: error!",1349665087045
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665103571
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665107127
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665109539
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665125662
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665128222
+error,log,,,"controller.xml: error!",1349665130090
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665131175
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665133109
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665135604
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665138535
+error,log,,,"controller.xml: error!",1349665143178
+error,log,,,"controller.xml: error!",1349665143397
+error,log,,,"controller.xml: error!",1349665143587
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665144171
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665145500
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665147192
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665149945
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349665149976
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665150802
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665151324
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349665151340
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665153424
+error,log,,,"controller.xml: error!",1349665153520
+error,log,,,"controller.xml: error!",1349665158777
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665161153
+error,log,,,"controller.xml: error!",1349665163082
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665163228
+error,log,,,"controller.xml: error!",1349665163235
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665164275
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665165742
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665167209
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665173889
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349665173916
+error,log,,,"controller.xml: error!",1349665182923
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349665183040
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665187210
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349665187673
+error,log,,,"controller.xml: error!",1349665189156
+error,log,,,"controller.xml: error!",1349665189366
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349665189480
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665190806
+error,log,,,"controller.xml: error!",1349665190956
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665195018
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349665201076
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665203258
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665210433
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349665214524
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665421546
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349665428229
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349665431781
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665433362
+error,log,,,"configuration.xml: error!",1349665433483
+error,log,,,"controller.xml: error!",1349665434931
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665435050
+closed,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349665435100
+activated,view,org.eclipse.jdt.ui,3.6.2.r362_v20110203,"org.eclipse.jdt.ui.PackageExplorer",1349665440886

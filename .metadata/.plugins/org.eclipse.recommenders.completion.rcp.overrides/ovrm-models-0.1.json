@@ -1,0 +1,12 @@
+{
+  "Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar": {
+    "location": "Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar\u0027. Neither fingerprint \u00277aff97a42565296c21fff6cc3cedbd2555c1872e\u0027 nor symbolic name \u0027com.sony.smallapp\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar\u0027. Neither fingerprint \u002793f28e910d1ae90d13c57b7b4683e4583f4096e9\u0027 nor symbolic name \u0027liplisandroid\u0027 are known."
+  }
+}

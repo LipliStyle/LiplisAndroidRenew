@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;little.cute.Xml.LiplisShortNews.LiplisShortNewsJpJson.itemConvert(...)&apos; のローカル変数の名前を &apos;res&apos; から &apos;msn&apos; に変更します&#x0D;&#x0A;- 元のプロジェクト: &apos;LiplisAndroid&apos;&#x0D;&#x0A;- オリジナル要素: &apos;little.cute.Xml.LiplisShortNews.LiplisShortNewsJpJson.itemConvert(ResLpsShortNewsJson).res&apos;&#x0D;&#x0A;- 名前変更済み要素: &apos;res&apos;&#x0D;&#x0A;- リファクタリングされた要素の参照を更新" description="ローカル変数名 &apos;res&apos; の変更" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;little.cute.Xml.LiplisShortNews{LiplisShortNewsJpJson.java[LiplisShortNewsJpJson~itemConvert~QResLpsShortNewsJson;@res!1754!1791!1767!1769!QMsgShortNews;!0!false" name="msn" references="true" stamp="1363994405374" version="1.0"/>
+</session>

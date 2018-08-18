@@ -1,0 +1,2897 @@
+//=======================================================================
+//  ClassName : LiplisWidgetProvider
+//  概要      	  : リプリスウィジェットプロバイダ
+//
+//	extends   : AppWidgetProvider
+//	impliments: 	
+//
+//　設定仕様
+//	おしゃべり頻度
+//　　おしゃべり　発言後 10s後
+//　　ふつう　　　発言後 30s後
+//　　ひかえめ　　発言後 60s後
+//
+//	アクティブ頻度
+//　　おてんば　フル動作。1s置きのスキャン　口パク 1s置き、まばたき5s～10s
+//　　ひかえめ　ハーフ動作2s置きのスキャン　口パク 2s置き、まばたき16秒おき固定
+//　　エコ　　　まばたき、口パクを一切しない。感情総合ポイントで最終エモーション算出して、たち絵を変える
+//
+//  LiplisAndroidシステム      
+//  Copyright(c) 2011-2011 sachin. All Rights Reserved. 
+//=======================================================================
+package little.cute.Widget;
+
+import java.util.Calendar;
+import java.util.Random;
+
+import little.cute.R;
+import little.cute.Activity.LiplisWidgetConfiguration;
+import little.cute.Activity.LiplisWidgetLog;
+import little.cute.Common.LiplisDefine;
+import little.cute.Common.LiplisUtil;
+import little.cute.Fct.FctLiplisMsg;
+import little.cute.Msg.MsgChatMessage;
+import little.cute.Msg.MsgShortNews;
+import little.cute.Obj.ObjBattery;
+import little.cute.Obj.ObjBody;
+import little.cute.Obj.ObjClock;
+import little.cute.Obj.ObjLiplisBody;
+import little.cute.Obj.ObjLiplisChat;
+import little.cute.Obj.ObjLiplisLogList;
+import little.cute.Obj.ObjPreference;
+import little.cute.Web.LiplisApi;
+import little.cute.Xml.LiplisChatSetting;
+
+import org.apache.http.message.BasicNameValuePair;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.View;
+import android.widget.RemoteViews;
+
+public class LiplisWidgetProvider extends AppWidgetProvider implements Runnable{
+
+	///=====================================
+    /// 更新用のインテントとコンテキスト
+	private static int appWidgetId;						//ウィジェットID
+	private static Context liplisContext;					//コンテキスト
+
+	///=====================================
+    /// クラス
+	private static LiplisApi lpsApi;						//リプリスAPI
+	private static ObjLiplisBody olb;						//リプリスボディオブジェクト
+	private static ObjBody ob;								//現在表示ボディオブジェクト
+	private static ObjBattery obt;							//バッテリーオブジェクト
+	private static ObjLiplisChat olc;						//チャットオブジェクト
+	private static ObjPreference op;						//プリファレンスオブジェクト
+	private static ObjLiplisLogList ol;					//ログオブジェクト
+	private static ObjClock oc;							//時間オブジェクト
+	
+	///=====================================
+    /// ダウンロード用スレッド
+	private Thread thread;	
+	
+	///=====================================
+    /// 設定値
+	//NOTE : liplisRefreshRate * liplisRate = 更新間隔 (updateCntに関連)
+	private static int liplisInterval = 10;		//インターバル
+	private static int liplisRefresh	= 10;			//リフレッシュレート
+	private static int liplisWindowCode = 0;			//ウインドウコード
+	
+	///=====================================
+    /// チャット制御カウント
+	private static int cntUpdate = 10;
+	
+	///=====================================
+    /// 制御フラグ
+	private static int 	  flgAlarm = 99;					//アラームフラグ
+	private static boolean flgInit 		= false;		//初期化フラグ	
+	private static boolean flgThinking   = false;		//考え中
+	private static boolean flgClockMode 	= false;		//クロックモード
+	private static boolean flgChatting 	= false;		//チャット中
+	private static boolean flgSkip 		= false;		//スキップ中
+	private static boolean flgSitdown 	= false;		//おやすみステータス
+	private static boolean flgAutoSleepOn = false;		//自動スリープがONになったときON
+	private static boolean flgIconOn 		= true;			//アイコンオン
+	private static boolean flgGettingTopic = false;		//トピックの取得中
+	
+    ///=====================================
+    /// 表示制御カウンタ
+	private static int cntBlink 	= 0;       				//1回/5～10s
+	private static int cntMouth 	= 0;       				//1回/1s
+
+    ///=====================================
+    /// 制御プロパティ
+    private static MsgShortNews liplisNowTopic;
+    private static String liplisNowWord 	= "";			//現在読み込みの単語(cntLnwでカウント)
+    private static String liplisChatText 	= "";			//現在読み込みの文字(cntLctでカウント)
+    private static int cntLct			= 0;				//リプリスチャットテキストカウント
+    private static int cntLnw			= 0;				//リプリスナウワードカウント
+    private static int nowPoint 		= 0;				//現在感情ポイント
+    private static int nowEmotion 	= 0;				//感情現在値
+    private static int prvEmotion 	= 0;				//感情前回値
+    
+    ///=====================================
+    /// アイコン制御
+    private static int cntIconClose = 0;					//アイコン消去カウント
+        
+	private static int batteryNowId = 0;					//バッテリーID
+	
+	///=====================================
+    /// エラー表示用
+	private static final String errorClassName ="AppWidgetProvider:";
+	
+	
+    ///====================================================================
+    ///
+    ///                           イベントハンドラ
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onEnabled
+    /// 最初にウィジェットが作成されるときに呼び出される
+    /// </summary>
+    @Override
+    public void onEnabled(Context context) {
+    	super.onEnabled(context);
+
+    	//ログ出力
+        Log.i(LiplisDefine.LOG_TAG, "onEnabled()");  
+
+        //アラーム生成
+        flgAlarm = 99;
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onUpdate
+    /// 配置時に1回呼び出される。
+    /// 初期処理はここで行えば良い
+    ///	(アラームマネージャーを廃止したため、ここでのアップデートは行われない)
+    /// </summary>
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    	super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+    	//
+    	if(flgAlarm == 12)
+    	{
+    		//チャットフェーズ
+    		Log.d(LiplisDefine.LOG_TAG, "refleshLiplis(): ");
+    		updateLiplis(appWidgetManager,context);
+    	}
+    	else if(flgAlarm == 10)
+    	{
+    		//カウントダウンフェーズ
+    		onCountDown();
+    	}
+    	else if(flgAlarm == 11)
+    	{
+    		//話題取得フェーズ
+    		Log.d(LiplisDefine.LOG_TAG, "nextLiplis(): ");
+    		nextLiplis(context);
+    	}
+    	else if(flgAlarm == 99)
+    	{
+    		Log.d(LiplisDefine.LOG_TAG, "updateFirstStep(): ");
+            //初期化(初期化済みチェックは内部で行っている)
+        	initLiplis(context);
+    		updateFirstStep(context, appWidgetIds[0]);
+    	}
+    	else
+    	{
+    		
+    	}
+    }
+
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onDeleted
+    /// ウィジェットのインスタンスが削除されたときに呼び出される
+    /// </summary>
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+    	
+        //ログ出力
+        Log.d(LiplisDefine.LOG_TAG, "onDelete()");
+        
+        stopAlarm(context);
+        stopAlarm(context);
+        stopAlarm(context);
+        
+        flgAlarm =99;
+        
+    }
+
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onDeleted
+    /// ウィジェットのすべてのインスタンスが削除されたときに呼び出される
+    /// </summary>
+	@Override
+	public void onDisabled(Context context) {
+		
+		super.onDisabled(context);
+		
+		//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onDisabled(): ");
+	}
+	    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onReceive
+    /// メッセージを受信したときに発生
+    /// </summary>
+    @Override
+    public void onReceive(Context context, Intent intent) {
+    	try
+    	{
+    		super.onReceive(context, intent);
+        	
+        	//引数のインテントからアクションを取得
+            final String action = intent.getAction();
+            
+            //ログ出力
+            Log.d(LiplisDefine.LOG_TAG, "OnReceive:Action: " + action);
+            
+            //アクションがACTION_APPWIDGET_DELETEDとなっているか
+            if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
+            	//ウィジェットＩＤの取得
+                final int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+                //アプリケーションＩＤが不正ＩＤかどうかチェック
+                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                	//正しいアプリケーションＩＤなら削除する
+                    this.onDeleted(context, new int[] { appWidgetId });
+                }
+            }
+            else if(AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action))
+            {
+            	return;
+            }
+            else if(Intent.ACTION_BATTERY_CHANGED.equals(action))
+            {
+            	onChangeBattery(intent, context);
+            } 
+            //クリックイベント
+            else if(LiplisDefine.LIPLIS_CLICK_ACTION.equals(action))
+            {
+            	onClickBody(context);
+            } 	
+            else if(LiplisDefine.LIPLIS_CLICK_ACTION_SLEEP.equals(action))
+            {
+            	onClickIconSleep(context);
+            }  
+            else if(Intent.ACTION_SCREEN_ON.equals(action))
+    		{
+            	onWaikup(context);
+    		}
+            else if(Intent.ACTION_SCREEN_OFF.equals(action))
+            {
+            	onSleep();
+            }
+            else if(LiplisDefine.LIPLIS_CLICK_ACTION_BATTERY.equals(action))
+            {
+            	onClickBattery(context);
+            }
+            else if(LiplisDefine.LIPLIS_CLICK_ACTION_CLOCK.equals(action))
+            {
+            	onClickClock(context);
+            }
+            else if(LiplisDefine.LIPLIS_SETTING_START.equals(action))
+            {
+            	onSettingStart(context);
+            }
+            else if(LiplisDefine.LIPLIS_SETTING_FINISH.equals(action))
+            {
+            	onReciveSettingChange(context);
+            }
+            else if(Intent.ACTION_BOOT_COMPLETED.equals(action))
+            {
+            	flgAlarm = 99;
+            	setAlarm(context);
+            }
+            else if(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE.equals(action))
+            {
+            	Log.d(LiplisDefine.LOG_TAG, "ACTION_APPWIDGET_CONFIGURE: " + action);
+            }
+            else if(AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action))
+            {
+            	Log.d(LiplisDefine.LOG_TAG, "ACTION_APPWIDGET_ENABLED: " + action);
+            }
+            else 
+            {
+                
+            }
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error:onReceive()" + e.toString());
+    	}
+    }
+    
+    /// <summary>
+    /// onCountDown
+    /// カウントダウンイベント
+    /// </summary>
+    private void onCountDown()
+    {
+        try
+    	{
+        	//ログ出力
+    		Log.d(LiplisDefine.LOG_TAG, "onCountDown(): ");
+    	
+    		//カウントダウン
+    		cntUpdate--;
+    		
+    		//チャットフェーズに以降
+    		if(cntUpdate <= 0)
+    		{
+    			flgAlarm = 11;
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onCountDown()");
+    	}
+    	
+    }   
+    
+    
+    /// <summary>
+    /// onClickBody
+    /// クリックイベント
+    /// </summary>
+    private void onClickBody(Context context)
+    {
+        try
+    	{
+        	//ログ出力
+    		Log.d(LiplisDefine.LOG_TAG, "onClickBody(): ");
+    	
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4)
+        	{
+        		oc.updateClockObject();
+        		iconOn();
+        		nextClick(context);
+        		return;
+        	}
+        	
+        	//チャット中チェック
+        	if(!flgChatting)
+        	{
+        		iconOn();
+        		nextClick(context);
+        	}
+        	else
+        	{
+        		flgSkip = true;
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onClickBody()");
+    	}
+    	
+    }
+
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onChangeBattery
+    /// バッテリー変更イベント
+    /// 2011/07/25 var1.2.0 
+    /// </summary>
+    private void onChangeBattery(Intent intent, Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onChangeBattery(): ");
+
+    	updateBatteryInfo(intent, context);
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onWaikup
+    /// 起床
+    /// 2011/07/31 var1.2.0 
+    /// </summary>
+    private void onWaikup(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onWaikup(): ");
+    	
+        try
+    	{
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4){return;}
+    		
+        	if(op.getLpsAutoWaikup() == 1)
+        	{
+        		standUp(context);
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onWaikup()");
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onSleep
+    /// おやすみ
+    /// 2011/07/31 var1.2.0 
+    /// </summary>
+    private void onSleep()
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onSleep(): ");
+		
+        try
+    	{
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4){return;}
+        	
+        	if(op.getLpsAutoSleep() == 1)
+        	{
+        		flgAutoSleepOn = true;
+        		sitDown();
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onSleep()");
+    	}
+    }
+
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onChangeBattery
+    /// スリープアイコンクリック
+    /// 2011/08/25 var2.0.0 
+    /// </summary>
+    private void onClickIconSleep(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onClickIconSleep(): ");
+    	
+        try
+    	{
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4){return;}
+    		
+        	if(flgSitdown)
+        	{
+        		standUp(context);
+        	}
+        	else
+        	{
+        		sitDown();
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onClickIconSleep()");
+    	}
+		
+    	
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onClickBattery
+    /// バッテリーアイコンクリック
+    /// 2011/08/25 var2.0.0 
+    /// </summary>
+    private void onClickBattery(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onClickBattery(): ");
+    	
+        try
+    	{
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4){return;}
+        	
+        	batteryInfo(context);
+
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onClickBattery()");
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onClickClock
+    /// 時計アイコンクリック
+    /// 2011/08/25 var2.0.0 
+    /// </summary>
+    private void onClickClock(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onClickClock(): ");
+        try
+    	{  	
+        	//時計モード時無効
+        	if(op.getLpsMode() == 4){return;}
+        	
+        	clockInfo(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: onClickClock()");
+    	}
+    }
+
+  /// <summary>
+    //  MethodType : base
+    /// MethodName : onSettingStart
+    /// 設定開始
+    /// 2011/08/25 var2.0.0 
+    /// </summary
+    private void onSettingStart(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onSettingStart(): ");
+    	try
+     	{
+    		chatStop();
+    		flgAlarm = 0;
+     	}
+     	catch(Exception e)
+     	{
+     		Log.i(LiplisDefine.LOG_TAG, "Error: onSettingStart()");
+     	}
+    }
+    
+    /// <summary>
+    //  MethodType : base
+    /// MethodName : onReciveSettingChange
+    /// 設定変更通知
+    /// 2011/08/25 var2.0.0 
+    /// </summary
+    private void onReciveSettingChange(Context context)
+    {
+    	//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "onReciveSettingChange(): ");
+    	
+    	try
+     	{
+    		//設定の読み込み
+    		loadSetting(context);
+    		
+    		//スイッチする
+    		switchTalkClock(op.getLpsMode() == 4, context);
+    		
+    		//フラグを
+    		flgAlarm = 11;
+     	}
+     	catch(Exception e)
+     	{
+     		Log.i(LiplisDefine.LOG_TAG, "Error: onReciveSettingChange()");
+     	}
+    }
+    
+    ///====================================================================
+    ///
+    ///                           アラーム
+    ///                         
+    ///====================================================================
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : setAlarm
+    /// アラームのスタート
+    /// </summary>
+    private boolean setAlarm(Context context)
+    {
+    	Log.d(LiplisDefine.LOG_TAG, "setAlarm: ");
+    	try
+    	{
+    		AlarmManager updateAlarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);											// AlramManager取得
+    		updateAlarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + LiplisDefine.LIPLIS_UPDATE_RATE, LiplisDefine.LIPLIS_UPDATE_RATE, getPendingAlarmIntent(context)); 	// AlramManagerにPendingIntentを登録
+
+    		return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: sitDown()");
+			return false;
+		}
+    }
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : stopAlarm
+    /// アラームストップ
+    /// </summary>
+    private boolean stopAlarm(Context context)
+    {
+    	Log.d(LiplisDefine.LOG_TAG, "stopAlarm: ");
+    	try
+    	{
+    		AlarmManager updateAlarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+    		updateAlarm.cancel(getPendingAlarmIntent(context));  
+    		return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: " + e.toString());
+			return false;
+		}
+    }  
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : getPendingAlarmIntent
+    /// アラームのペンディングインテントを作成する
+    /// </summary>
+    private PendingIntent getPendingAlarmIntent(Context context) {
+		Intent widgetUpdate = new Intent();
+		widgetUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		widgetUpdate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { appWidgetId });
+		widgetUpdate.setType("Liplus");
+		widgetUpdate.setData(Uri.withAppendedPath(Uri.parse(LiplisDefine.URI_SCHEME + "://widget/id/"), String.valueOf(appWidgetId)));
+		return PendingIntent.getBroadcast(context, appWidgetId, widgetUpdate, PendingIntent.FLAG_UPDATE_CURRENT);
+    } 
+    
+    
+    ///====================================================================
+    ///
+    ///                           副イベント
+    ///                         
+    ///====================================================================
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : sidDown
+    /// すわり
+    /// </summary>
+    private boolean sitDown()
+    {
+    	try
+    	{
+    		//すわり有効、おしゃべり中ならおしゃべりメソッド内で処理
+    		flgSitdown = true;
+    		
+    		//おしゃべり中でなければ座りモーション
+    		//おしゃべり中はれフレッシュメソッド内で処理
+    		if(!flgChatting)
+    		{
+    			//座りモーション
+    			updateBodySitDown();
+    		}
+    		
+    		//アイコン変更
+    		updateSleepIcon();
+    		
+    		return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: sitDown()");
+			return false;
+		}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : standUp
+    /// 立ち上がり
+    /// </summary>
+    private boolean standUp(Context context)
+    {
+    	try
+    	{
+    		flgSitdown = false;
+    		
+    		//アイコン変更
+    		updateSleepIcon();
+    		
+    		//あいさつ
+    		greet(context);
+
+    		return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: standUp()");
+			return false;
+		}
+    }
+
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : iconOn
+    /// アイコンオン
+    /// </summary>
+    private boolean iconOn()
+    {
+        try
+    	{
+        	flgIconOn = true;
+        	cntIconClose = op.getLpsIconCloseCnt();
+        	
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            remoteView.setViewVisibility(R.id.liplisSleep, View.VISIBLE);
+            remoteView.setViewVisibility(R.id.liplisLog, View.VISIBLE);
+            remoteView.setViewVisibility(R.id.liplisSetting, View.VISIBLE);
+            remoteView.setViewVisibility(R.id.liplisThinking, View.VISIBLE);
+            remoteView.setViewVisibility(R.id.liplisAngClock, View.VISIBLE);
+            remoteView.setViewVisibility(R.id.liplisBattery, View.VISIBLE);
+
+    		//アイコンクリックリスナー
+    		setClickListenerIcon(remoteView);
+            
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+        	
+        	return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: iconOn()");
+    		 return false;
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : iconOff
+    /// アイコンオフ
+    /// </summary>
+    private boolean iconOff()
+    {
+        try
+    	{
+        	flgIconOn = false;
+        	cntIconClose = -1;
+        	
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            remoteView.setViewVisibility(R.id.liplisSleep, View.GONE);
+            remoteView.setViewVisibility(R.id.liplisLog, View.GONE);
+            remoteView.setViewVisibility(R.id.liplisSetting, View.GONE);
+            remoteView.setViewVisibility(R.id.liplisThinking, View.GONE);
+            remoteView.setViewVisibility(R.id.liplisAngClock, View.GONE);
+            remoteView.setViewVisibility(R.id.liplisBattery, View.GONE);
+
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+        	
+        	return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: iconOff()");
+    		 return false;
+    	}
+
+    }
+    
+    ///====================================================================
+    ///
+    ///                         イベントリスナー
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : setClickListener
+    /// クリックリスナーの設定
+    /// </summary>
+    private boolean setClickListener(RemoteViews remoteView)
+	{
+        try
+        {
+        	//ボディのクリックリスナー定義
+        	Intent intentBody = new Intent(liplisContext, LiplisWidgetProvider.class);
+        	intentBody.setAction(LiplisDefine.LIPLIS_CLICK_ACTION);
+        	PendingIntent pendingIntentBody = PendingIntent.getBroadcast(liplisContext, appWidgetId, intentBody, 0);
+        	remoteView.setOnClickPendingIntent(R.id.liplisImage, pendingIntentBody);
+        	
+        	if(op.getLpsWindowClick() == 2)
+        	{
+            	//ウインドウのクリックリスナー定義
+                //呼び出したいActivityをセット
+        		Intent intentWeb = new Intent("android.intent.action.VIEW",Uri.parse(liplisNowTopic.url));
+                PendingIntent pendingIntent = PendingIntent.getActivity(liplisContext, 0, intentWeb, 0);
+
+                //widgetのボタンクリックイベントに呼び出したいIntentを設定する。
+                remoteView.setOnClickPendingIntent(R.id.liplisWindow, pendingIntent);
+        	}
+        	else if(op.getLpsWindowClick() == 1)
+        	{
+        		Intent intentSetting = new Intent(liplisContext, LiplisWidgetConfiguration.class);
+            	PendingIntent pdSetting = PendingIntent.getActivity(liplisContext, 0, intentSetting, 0);
+            	remoteView.setOnClickPendingIntent(R.id.liplisWindow, pdSetting);
+        	}
+
+        	return true;
+        }
+        catch(Exception e)
+        {
+        	Log.i(LiplisDefine.LOG_TAG, "Error: setClickListener()");
+        	return false;
+        }
+	}    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : setClickListenerIcon
+    /// アイコンクリックリスナーの設定
+    /// </summary>
+    private boolean setClickListenerIcon(RemoteViews remoteView)
+	{
+        try
+        {
+        	//スリープアイコンクリックリスナー定義
+        	Intent intentIconSleep = new Intent(liplisContext, LiplisWidgetProvider.class);
+        	intentIconSleep.setAction(LiplisDefine.LIPLIS_CLICK_ACTION_SLEEP);
+        	PendingIntent piIconSleep = PendingIntent.getBroadcast(liplisContext, appWidgetId, intentIconSleep, 0);
+        	remoteView.setOnClickPendingIntent(R.id.llLpsSleep, piIconSleep);
+        	
+        	//設定のクリックリスナー定義
+//        	Intent intentSetting = new Intent(liplisContext, LiplisWidgetConfiguration.class);
+//        	PendingIntent pdSetting = PendingIntent.getActivity(liplisContext, 0, intentSetting, 0);
+//        	remoteView.setOnClickPendingIntent(R.id.liplisSetting, pdSetting);
+        	Intent intentSetting = new Intent(liplisContext, LiplisWidgetConfiguration.class);
+        	PendingIntent pdSetting = PendingIntent.getActivity(liplisContext, 0, intentSetting, 0);
+        	remoteView.setOnClickPendingIntent(R.id.llLpsSetting, pdSetting);
+        	
+        	//ログのクリックリスナー定義
+        	//ペンディングインテントにエキストラをセットする場合はコンストラクターの第四引数に「PendingIntent.FLAG_UPDATE_CURRENT」を指定
+        	Intent intentLog = new Intent(liplisContext, LiplisWidgetLog.class);
+        	intentLog.putExtra("LOGLIST", ol);
+        	PendingIntent pdLog = PendingIntent.getActivity(liplisContext, 0, intentLog, PendingIntent.FLAG_UPDATE_CURRENT);
+        	remoteView.setOnClickPendingIntent(R.id.llLpsLog, pdLog);
+
+        	//バッテリーアイコンクリックリスナー定義
+        	Intent intentIconBattery = new Intent(liplisContext, LiplisWidgetProvider.class);
+        	intentIconBattery.setAction(LiplisDefine.LIPLIS_CLICK_ACTION_BATTERY);
+        	PendingIntent piIconBattery = PendingIntent.getBroadcast(liplisContext, appWidgetId, intentIconBattery, 0);
+        	remoteView.setOnClickPendingIntent(R.id.llLpsbattery, piIconBattery);
+        	
+        	//時計アイコンクリックリスナー定義
+        	Intent intentIconClock = new Intent(liplisContext, LiplisWidgetProvider.class);
+        	intentIconClock.setAction(LiplisDefine.LIPLIS_CLICK_ACTION_CLOCK);
+        	PendingIntent piIconClock = PendingIntent.getBroadcast(liplisContext, appWidgetId, intentIconClock, 0);
+        	remoteView.setOnClickPendingIntent(R.id.llLpsAngClock, piIconClock);
+        	
+        	return true;
+        }
+        catch(Exception e)
+        {
+        	Log.i(LiplisDefine.LOG_TAG, "Error: setClickListenerIcon()");
+        	return false;
+        }
+	}    
+    
+    
+    ///====================================================================
+    ///
+    ///                         Runnable の実装
+    ///                         
+    ///====================================================================
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : run 
+    /// スレッド
+    /// </summary>
+	public void run() {
+		try {
+			Thread.sleep(liplisRefresh);
+		} catch (InterruptedException e) {
+			Log.i(LiplisDefine.LOG_TAG, "Error: run()");
+		}
+		liplisHandler.sendEmptyMessage(0);
+	}
+	
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : liplisHandler 
+    /// ハンドら
+    /// </summary>
+	private Handler liplisHandler = new Handler() {
+	    public void handleMessage(Message msg){
+	    	try {
+	    		// 親クラスのメソッドの呼び出し
+		    	getTopic();
+			} catch (Exception e) {
+				Log.i(LiplisDefine.LOG_TAG, "Error: liplisHandler()");
+			}
+	    	finally
+	    	{
+	    		thread = null;
+	    	}
+	    }
+	};
+    
+    ///====================================================================
+    ///
+    ///                           初期化処理
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : initLiplis
+    /// 初期化
+    /// </summary>
+    private void initLiplis(Context context)
+    {
+    	try
+    	{
+    		if(!flgInit)
+    		{
+    			//LiplisAPIの初期化
+            	lpsApi = new LiplisApi();
+            	
+            	//プリファレンスオブジェクト
+            	op = new ObjPreference(context);
+            	
+            	//OLBの初期化
+            	olb = new ObjLiplisBody();
+            	
+            	//バッテリーインフォの初期化
+            	obt = new ObjBattery();
+            	
+            	//OLBよりデフォルトのたち絵データをロードしておく
+            	ob = olb.getDefaultBody();
+            	
+            	//ログオブジェクトの初期化
+            	ol = new ObjLiplisLogList();
+            	
+            	//時間オブジェクトの初期化
+            	oc = new ObjClock();
+            	
+            	//チャット設定の取得
+            	LiplisChatSetting lc = new LiplisChatSetting();
+            	
+        		olc = lc.getChatSetting(context.getResources().getXml(R.xml.xmlchat));
+            	
+            	//チャット中フラグ
+            	flgChatting = false;
+            	
+            	//クロックモード
+            	flgClockMode = false;
+            	
+            	//2011/07/31 バッテリー監視を停止
+            	createIntentFilter(Intent.ACTION_BATTERY_CHANGED, context);		
+            	createIntentFilter(Intent.ACTION_SCREEN_ON, context);
+            	createIntentFilter(Intent.ACTION_SCREEN_OFF, context);
+            	createIntentFilter(Intent.ACTION_BOOT_COMPLETED, context);
+            	
+            	flgInit = true;
+    		}
+    		
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: initLiplis()");
+    	}
+    } 
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : createIntentFilter
+    /// インテントフィルタークリエイター
+    /// </summary>
+	public void createIntentFilter (String Code, Context context)
+	{
+		try
+		{
+			IntentFilter filterBattery = new IntentFilter();
+			filterBattery.addAction(Code);
+			context.getApplicationContext().registerReceiver(this, filterBattery);
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: createIntentFilter()");
+		}
+	}
+
+	private void updateFirstStep(Context context, int appWidgetId)
+	{
+   	 	//ログ出力
+    	Log.d(LiplisDefine.LOG_TAG, "onUpdate():" + op.getLpsUid());
+    	
+    	//まずアラームフラグを0に退避
+    	flgAlarm = 0;
+    	
+    	//初期化
+    	initLiplis(context);
+    	
+    	//UID送信
+    	LiplisApi.liplisStart(op.getLpsUid());
+    	
+    	//アプリウィジェットIDの取得
+    	this.appWidgetId = appWidgetId;
+    	
+    	//コンテキストの取得
+    	liplisContext = context;
+    	
+    	//起こしておく
+    	flgChatting = false;
+    	
+    	//設定のよみこみ
+    	loadSetting(context);
+    	
+    	//バッテリー表示
+    	updateBatteryInfo(null,context);
+    	
+    	//チャットインフォの初期化
+    	initChatInfo();
+
+    	//挨拶
+    	greet(context);
+
+	}
+	
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : reSetUpdateCount
+    /// チャットの開始
+    /// </summary>
+	private void reSetUpdateCount()
+	{
+		//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "reSetUpdateCount(): ");
+		
+        try
+    	{
+    		cntUpdate = liplisInterval;
+        	flgAlarm = 10;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: reSetUpdateCount()");
+    	}
+	}
+
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : createTimer
+    /// チャットの開始
+    /// </summary>
+	private void chatStart(Context context)
+	{
+		//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, "chatStart(): ");
+		
+        try
+    	{
+    		//フラグ
+    		flgChatting = true;
+    		
+    		//即表示判定
+    		if(op.getLpsSpeed() == 3)
+    		{
+    			immediatelyReflesh(context);
+    		}else
+    		{
+    			//おしゃべりフェーズに移行
+    			flgAlarm = 12;
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chatStart()");
+    	}
+	}
+	
+	/// <summary>
+    //  MethodType : child
+    /// MethodName : chatStop
+    /// チャットストップ
+    /// </summary>
+	private void chatStop()
+	{	
+		//ログ出力
+		Log.d(LiplisDefine.LOG_TAG, " chatStop(): ");
+		
+        try
+    	{
+        	//スルーカウントに移行
+        	flgAlarm = 0;
+        	
+        	//カウントの初期化
+        	reSetUpdateCount();
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chatStop()");
+    	}
+    	finally
+    	{
+    		flgChatting = false;
+    		flgSkip = false;
+    	}
+	}
+
+	
+    ///====================================================================
+    ///
+    ///                            設定取得
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : loadSetting
+    /// 設定のロード
+    /// </summary>
+//    private void loadSetting()
+//    {
+//    	try
+//    	{
+//        	//設定変更のチェック
+//        	if(op.checPreferenceData(liplisContext) == 1)
+//    		{
+//        		op.getPreferenceData(liplisContext);
+//        		liplisRefresh	= op.getLpsReftesh();
+//        		chengeWindowCheck();
+//        		changeModeCheck();
+//    		}
+//    	}
+//    	catch(Exception e)
+//    	{
+//    		Log.i(LiplisDefine.LOG_TAG, "Error: loadSetting()");
+//    	}
+//
+//    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : loadSetting
+    /// 設定のロード(初期化の強制ロード)
+    /// </summary>
+    private void loadSetting(Context context)
+    {  	
+    	try
+    	{
+    		op.getPreferenceData(context);
+    		liplisInterval = op.getLpsInterval();
+    		liplisRefresh	= op.getLpsReftesh();
+        	chengeWindow();
+        	
+        	//時計モードへの対応
+        	switchTalkClock(op.getLpsMode() == 4, context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: loadSetting()");
+    	}
+    	
+    	//このメソッドの後にcreateTimerしているので、ここでは何もしない
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : chengeWindowCheck
+    /// ウインドウが変更されていたら更新する
+    /// </summary>
+    private void chengeWindowCheck()
+    {
+        try
+    	{
+        	//ウインドウコードが現在値と同じであれば抜ける
+        	if(liplisWindowCode == op.getLpsWindowColor()){return;}
+        	chengeWindow();
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chengeWindowCheck()");
+    	}
+    	
+    }
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : ウインドウを変更する
+    /// </summary>
+    private void chengeWindow()
+    {
+        try
+    	{
+        	//ウインドウコード更新
+        	liplisWindowCode = op.getLpsWindowColor();
+        	
+        	int windowCode = 0;
+        	
+        	//ウインドウの色変更
+        	switch(liplisWindowCode)
+        	{
+        	case 0:windowCode = R.drawable.window;			break;
+        	case 1:windowCode = R.drawable.window_blue;		break;
+        	case 2:windowCode = R.drawable.window_green;	break;
+        	case 3:windowCode = R.drawable.window_pink;		break;
+        	case 4:windowCode = R.drawable.window_purple;	break;
+        	case 5:windowCode = R.drawable.window_red;		break;
+        	case 6:windowCode = R.drawable.window_yellow;	break;
+        	default:windowCode = R.drawable.window;		break;
+        	}
+        
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            remoteView.setImageViewResource(R.id.liplisWindow, windowCode);
+            
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chengeWindow()");
+    	}
+    }
+	
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : changeModeCheck
+    /// モードが変更されているかチェックする
+    /// </summary>
+    private void changeModeCheck(Context context)
+    {
+        try
+    	{
+        	//ウインドウコードが現在値と同じであれば抜ける
+        	if(liplisInterval == op.getLpsInterval()){return;}
+        	
+        	//時計モードへの対応
+        	if(op.getLpsMode() == 4)
+        	{
+        		//強制起床
+        		standUp(context);
+        		
+        		//クロックモードオン
+        		switchTalkClockCheck(true, context);
+        	}
+        	else
+        	{
+        		switchTalkClockCheck(false, context);
+        	}
+        	
+        	//インターバルの変更を取得
+        	liplisInterval = op.getLpsInterval();
+        	
+        	//インターバルが変更されているのでタイマーの生成しなおし
+        	//createTimer(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: changeModeCheck()");
+    	}
+    }
+    
+
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : updateBodySitDown
+    /// 座り更新
+    /// </summary>
+    private boolean updateBodySitDown()
+    {
+        try
+    	{
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            remoteView.setImageViewResource(R.id.liplisImage, R.drawable.sitdown);
+            remoteView.setTextViewText(R.id.liplisTalkText, LiplisDefine.SAY_ZZZ);
+            
+    		//クリックリスナーの更新
+    		setClickListener(remoteView);
+        	
+    		//アイコンクリックリスナー
+    		setClickListenerIcon(remoteView);
+            
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+        	
+    		return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: updateBodySitDown()");
+    		 return false;
+    	}
+    	
+		
+    }
+	
+    ///====================================================================
+    ///
+    ///                            データ取得
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : getShortNews
+    /// ニュースの取得
+    /// </summary>
+    private void getShortNews(){
+        try
+    	{
+        	liplisNowTopic = LiplisApi.getShortNews(LiplisDefine.API_SHORT_NEWS_URL, new BasicNameValuePair("tone", LiplisDefine.API_SHORT_NEWS_TONE));
+        	
+        	if(liplisNowTopic == null || liplisNowTopic.converted == "")
+        	{
+        		liplisNowTopic = FctLiplisMsg.createMsgMassageDlFaild();
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: getShortNews()");
+    	}
+    }
+
+
+    ///====================================================================
+    ///
+    ///                           アイコンの更新
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : updateBatteryInfo
+    /// バッテリー情報の更新
+    /// </summary>
+    private boolean updateBatteryInfo(Intent intent, Context context)
+    {
+    	try
+    	{
+    		if(flgIconOn)
+    		{
+    			//コンテキストの初期化チェック
+    			if(context == null){return false;}
+    			
+    	    	//ウィジェットマネージャーの取得
+    	    	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+    	    	
+        		//リモートビューの取得
+                RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget);
+        		
+    			//バッテリーイメージの取得
+				obt.getBatteryImage(intent);
+				
+				batteryNowId =  obt.getBatteryImageId();
+				
+				//バッテリー表示を削除したためコメント化
+				remoteView.setImageViewResource(R.id.liplisBattery, batteryNowId);
+				
+				//ウィジェットの更新
+    	        appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+    		}
+    		
+    		return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: updateBatteryInfo()");
+    		return false;
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName :  updateSleepIcon
+    /// スリープアイコンの更新
+    /// </summary>
+    private boolean updateSleepIcon()
+    {
+    	try
+    	{
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            if(flgSitdown)
+            {
+            	remoteView.setImageViewResource(R.id.liplisSleep, R.drawable.ico_waikup);
+            }
+            else
+            {
+            	remoteView.setImageViewResource(R.id.liplisSleep, R.drawable.ico_zzz);
+            }
+    		
+    		//ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            
+            return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: updateSleepIcon()");
+    		return false;
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : updateSleepIcon
+    /// 考え中アイコンの更新
+    /// </summary>
+    private boolean updateThinkingIcon()
+    {
+    	try
+    	{
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+    		
+            if(flgThinking)
+            {
+            	remoteView.setImageViewResource(R.id.liplisThinking, R.drawable.ico_thinking);
+            }
+            else
+            {
+            	remoteView.setImageViewResource(R.id.liplisThinking, R.drawable.ico_thinking_not);
+            }
+    		
+    		//ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            
+            return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: updateThinkingIcon()");
+    		return false;
+    	}
+    }
+    
+    ///====================================================================
+    ///
+    ///                          チャット処理
+    ///                         
+    ///====================================================================
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : updateLiplis
+    /// リプリスの更新
+    /// 次の表示
+    /// </summary>
+    private void updateLiplis(AppWidgetManager appWidgetManager, Context context)
+    {
+    	try
+    	{    	
+    		long firstTime = SystemClock.elapsedRealtime();
+    		int waitTime = 1000/liplisRefresh;
+    		
+	    	for(int idx = 0; idx < liplisRefresh - 1; idx++)
+	    	{
+	    		if(flgAlarm != 12){return;}
+	    		
+	    		refleshLiplis(appWidgetManager, context);
+	    		
+	    		while(SystemClock.elapsedRealtime() <= (firstTime + (idx + 1) * waitTime))
+	    		{
+	    			Thread.sleep(10);
+	    		}
+	    	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: updateLiplis()");    	
+    	}
+    	
+    	
+    }
+    
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : nextLiplis
+    /// 次の表示
+    /// </summary>
+    private void nextLiplis(Context context)
+    {
+        try
+    	{    	
+	    	//話題取得フェーズ終了まで0に設定
+	    	flgAlarm = 0;
+	    	
+	    	//おしゃべり/ふつう/ひかえめ
+	    	if(op.getLpsMode() == 0 || op.getLpsMode() == 1 || op.getLpsMode() == 2)
+	    	{
+	    		runLiplis(context);
+	    	}
+	    	//無口
+	    	else if(op.getLpsMode() == 3)
+	    	{
+	    		//何もしない
+	    	}
+	    	//時計＆バッテリー
+	    	else if(op.getLpsMode() == 4)
+	    	{
+	    		runClock(context);
+	    	}
+    	}
+    	catch(Exception e)
+    	{
+    		flgAlarm = 11;
+    		Log.i(LiplisDefine.LOG_TAG, "Error: nextLiplis()");    	
+    	}
+    }
+    private void nextClick(Context context)
+    {   	
+        try
+    	{
+        	//時計
+        	if(op.getLpsMode() == 4)
+        	{
+        		runClock(context);
+        	}
+        	//発言
+        	else
+        	{
+        		runLiplis(context);
+        	}
+
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: nextClick()");    	
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : runLiplis
+    /// 行動する
+    /// </summary>
+    private void runLiplis(Context context)
+    {
+        try
+    	{
+	    	//チャット中なら回避
+	    	if(flgChatting){chatStop(); return;}
+	    	
+	    	//座り中なら回避
+	    	if(flgSitdown){chatStop(); return;}
+        	
+        	//クロックチェック
+        	switchTalkClockCheck(false, context);
+        	
+        	//アイコンカウント
+        	iconCloseCheck();
+        	
+        	//たち絵をデフォルトに戻す？
+        	//returnDefaultBody();
+        	
+        	//トピックを取得する
+        	getTopic();
+        	
+        	//チャット情報の初期化
+        	initChatInfo();
+        	
+        	//ニュースを取得しておしゃべり
+        	chatStart(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: runLiplis()");    	
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : initChatInfo
+    /// チャット情報の初期化
+    /// 行動する
+    /// </summary>
+    private void initChatInfo()
+    {
+        try
+    	{
+        	//チャットテキストの初期化
+        	liplisChatText = "";
+        	
+        	//ナウワードの初期化
+        	liplisNowWord = "";
+        	
+        	//ナウ文字インデックスの初期化
+        	cntLct = 0;
+        	
+        	//ナウワードインデックスの初期化
+        	cntLnw = 0;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: initChatInfo()");    	
+    	}
+
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : iconCloseCheck
+    /// アイコン閉じのチェック
+    /// </summary>
+    private void iconCloseCheck()
+    {
+        try
+    	{
+        	//アイコン消去が有効な場合
+        	if(op.getLpsIconCloseCnt() >= 0)
+        	{
+        		if(cntIconClose > 0)
+            	{
+            		cntIconClose--;
+            	}
+        		else if(cntIconClose == 0)
+        		{
+        			iconOff();
+        			cntIconClose = -1;
+        		}
+        	}
+        	else
+        	{
+        		//アイコンを常に表示設定で、フラグがオフのときは表示
+        		if(!flgIconOn)
+        		{
+        			iconOn();
+        		}
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: iconCloseCheck()");
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : startGetTopicThr
+    /// スレッドをスタートさせる
+    /// </summary>
+    private boolean startGetTopicThr()
+    {
+    	Log.d(LiplisDefine.LOG_TAG, "startGetTopicThr()");
+    	
+        try
+    	{
+        	int cnt = 0;
+        	
+        	if(thread != null)
+        	{
+        		return false;
+        	}
+        	
+        	flgGettingTopic = true;
+        	
+        	//スレッドの生成と開始
+            thread = new Thread(this);
+            thread.start();
+        	
+        	thread = null;
+            
+            return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: startGetTopicThr()");
+    		 return false;
+    	}
+    	
+
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : getTopic
+    /// トピックを取得する
+    /// </summary>
+    private void getTopic()
+    {
+        try
+    	{
+        	flgThinking = true;
+        	updateThinkingIcon();
+        	
+        	//時報チェック
+        	
+        	//バッテリー変化チェック
+       
+            getShortNews();
+        	
+        	//flgGettingTopic = false;
+        	
+        	flgThinking = false;
+        	updateThinkingIcon();
+    	}
+    	catch(Exception e)
+    	{
+    		flgThinking = false;
+    		updateThinkingIcon();
+    		Log.i(LiplisDefine.LOG_TAG, "Error: getTopic()");
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : switchTalkClockCheck
+    /// トークウインドウとクロックウインドウをスイッチする必要があるか調べ、必要であればスイッチ
+    ///	これから変更するべきフラグを指定する
+    /// </summary>
+    private void switchTalkClockCheck(boolean targetBool, Context context)
+    {
+    	if(targetBool != flgClockMode)
+    	{
+    		switchTalkClock(targetBool, context);
+    	}
+    }
+    private void switchTalkClock(boolean target,Context context)
+    {
+    	//ウィジェットマネージャーの取得
+    	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+    	
+		//リモートビューの取得
+        RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+		
+        flgClockMode = target;
+        
+        if(target)
+        {
+        	//時計を更新しておく
+        	oc.updateClockObject();
+        	
+        	remoteView.setViewVisibility(R.id.llTalkText, View.GONE);
+        	remoteView.setViewVisibility(R.id.llClockAndBattery, View.VISIBLE);
+        	
+        	updateClock(remoteView);
+        }
+        else
+        {
+        	remoteView.setViewVisibility(R.id.llTalkText, View.VISIBLE);
+        	remoteView.setViewVisibility(R.id.llClockAndBattery, View.GONE);
+        }
+		
+		//ウィジェットの更新
+        appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+    }
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : refleshLiplis
+    /// リフレッシュメソッド
+    /// </summary>
+    private void refleshLiplis(AppWidgetManager appWidgetManager, Context context)
+    {
+		Log.d(LiplisDefine.LOG_TAG, "1: ");
+		
+        try
+    	{
+            //--- キャンセルフェーズ --------------------
+            if(checkMsg(context)){return;}
+            Log.d(LiplisDefine.LOG_TAG, "2: ");
+            
+            //すわりチェック
+            if(checkSitdown(context)){return;}
+            Log.d(LiplisDefine.LOG_TAG, "2: ");
+            
+        	//--- 描画じゅんびフェーズ --------------------
+        	//ウィジェットマネージャーの取得
+        	appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	Log.d(LiplisDefine.LOG_TAG, "3: ");
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+            Log.d(LiplisDefine.LOG_TAG, "4: ");
+
+            //スキップチェック
+            if(checkSkip())
+            {
+    			updateText(remoteView);
+    			appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            }
+            Log.d(LiplisDefine.LOG_TAG, "5: ");
+            
+            //--- ナウワード取得・ナウテキスト設定フェーズ --------------------
+            if(setText(context)){return;}
+            Log.d(LiplisDefine.LOG_TAG, "6: ");
+            
+            //--- 描画フェーズ --------------------
+        	updateText(remoteView);
+        	Log.d(LiplisDefine.LOG_TAG, "7: ");
+        	
+        	//ボディの更新
+    		updateBody(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "8: ");
+            
+    		//クリックリスナーの更新
+    		setClickListener(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "9: ");
+        	
+    		//アイコンクリックリスナー
+    		setClickListenerIcon(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "10: ");
+    		
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            Log.d(LiplisDefine.LOG_TAG, "11: ");
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: refleshLiplis()");   
+    	}
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : immediatelyChat
+    /// 即座の行動
+    /// </summary>
+    private void immediatelyReflesh(Context context)
+    {
+		Log.d(LiplisDefine.LOG_TAG, "1: ");
+		
+        try
+    	{
+            //--- キャンセルフェーズ --------------------
+            if(checkMsg(context)){return;}
+            Log.d(LiplisDefine.LOG_TAG, "2: ");
+            
+            //すわりチェック
+            if(checkSitdown(context)){return;}
+            Log.d(LiplisDefine.LOG_TAG, "2: ");
+            
+        	//--- 描画じゅんびフェーズ --------------------
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	Log.d(LiplisDefine.LOG_TAG, "3: ");
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+            Log.d(LiplisDefine.LOG_TAG, "4: ");
+            
+            //--- 即表示フェーズ --------------------
+            //スキップ
+            skipLiplis();
+            Log.d(LiplisDefine.LOG_TAG, "5: ");
+            
+            //--- 描画フェーズ --------------------
+        	updateText(remoteView);
+        	Log.d(LiplisDefine.LOG_TAG, "6: ");
+        	
+        	//ボディの更新
+    		updateBody(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "7: ");
+            
+    		//クリックリスナーの更新
+    		setClickListener(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "8: ");
+        	
+    		//アイコンクリックリスナー
+    		setClickListenerIcon(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "9: ");
+    		
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            Log.d(LiplisDefine.LOG_TAG, "10: ");
+            
+            //終了
+            checkEnd(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: immediatelyReflesh()"); 
+    	}
+    }
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : checkMsg
+    /// メッセージチェック
+    ///	１バッチ終わったときにメッセージをヌルにしている。
+    ///	次が読み込まれるまではヌルでアイドル状態なので、抜ける。
+    /// </summary>
+    private boolean checkMsg(Context context)
+    {
+        try
+    	{
+        	 if(liplisNowTopic == null)
+             {
+             	return true;
+             }
+             return false;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: checkMsg()"); 
+    		 return false;
+    	}
+       
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : checkSkip
+    /// スキップチェック
+    /// </summary>
+    private boolean checkSkip()
+    {
+        try
+    	{
+        	if(flgSkip)
+            {
+        		Log.d(LiplisDefine.LOG_TAG, "checkSkip()");
+            	return skipLiplis();
+            }
+            return false;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: checkSkip()"); 
+    		 return false;
+    	}
+        
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : checkSkip
+    /// スキップチェック
+    /// </summary>
+    private boolean skipLiplis()
+    {
+        try
+    	{
+        	liplisChatText = "";
+        	
+        	for(int idx = 0; idx < liplisNowTopic.nameList.size(); idx++)
+        	{
+                //--- ワードセット、感情チェックフェーズ --------------------
+                //送りワード文字数チェック
+        	    if (idx != 0) {
+                    //なうワードの初期化
+        	    	liplisNowWord = liplisNowTopic.nameList.get(idx);
+                    
+                    //プレブエモーションセット
+                    prvEmotion = nowEmotion;
+                    
+                    //なうエモーションの取得
+                    nowEmotion = liplisNowTopic.emotionList.get(idx);
+                    
+                    //なうポイントの取得
+                    nowPoint = liplisNowTopic.pointList.get(idx);
+        	    }
+        	    //初回ワードチェック
+        	    else if (idx == 0) {
+
+        	    	liplisNowWord = liplisNowTopic.nameList.get(idx);
+
+        	        //空だったら、空じゃなくなるまで繰り返す
+        	        if (liplisNowWord.equals("")) {
+        	            do {
+        	                //次ワード遷移
+        	                idx++;
+        	                
+        	                //終了チェック
+        	                if (idx > liplisNowTopic.nameList.get(idx).length()) {break;}
+
+        	                //ナウワードの初期化
+        	                liplisNowWord = liplisNowTopic.nameList.get(idx);
+
+        	            } while (liplisNowWord.equals(""));
+        	        }
+        	    }
+        	    //おしゃべり中は何もしない
+        	    else {
+        	        
+        	    }
+        		
+        	    for(int kdx = 0; kdx < liplisNowWord.length(); kdx++)
+        	    {
+                    //おしゃべり
+                    liplisChatText = liplisChatText + liplisNowWord.substring(kdx, kdx + 1);
+        	    }
+
+        	    //終端設定
+        	    cntLnw = liplisNowTopic.nameList.size();
+        	    cntLct = liplisNowWord.length();
+        	    
+        	}        	
+        	return true;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.d(LiplisDefine.LOG_TAG, "!!!skipLiplisError!!!");
+    		
+    		//終端設定
+    	    cntLnw = liplisNowTopic.nameList.size();
+    	    cntLct = liplisNowWord.length();
+    		
+    		return false;
+    	}
+    	
+
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : checkSitdown
+    /// すわりチェック
+    /// </summary>
+    private boolean checkSitdown(Context context)
+    {
+        try
+    	{
+        	if(flgSitdown)
+        	{
+        		liplisNowTopic = null;
+        		updateBodySitDown();
+        		return true;
+        	}
+        	return false;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: checkSitdown()"); 
+    		 return false;
+    	}
+    	
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : checkEnd
+    /// 終了チェック
+    /// </summary>
+    private boolean checkEnd(Context context)
+    {
+        try
+    	{
+        	if(cntLnw >= liplisNowTopic.nameList.size())
+        	{
+        		ol.append(liplisChatText,liplisNowTopic.url);
+        		chatStop();
+        		liplisNowTopic = null;
+        		return true;
+        	}
+        	return false;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: checkEnd()"); 
+    		return false;
+    	}
+    }
+    
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : getSetText
+    /// ナウワード設定とテキスト設定を行う
+    /// </summary>
+    private boolean setText(Context context)
+    {
+        try
+    	{
+        	//配列チェック
+        	
+        	
+        	
+            //送りワード文字数チェック
+    	    if (cntLnw != 0) {
+    	    	if(cntLct >= liplisNowWord.length())
+    	    	{
+    	    		//終了チェック
+    	    		if(checkEnd(context)){return true;}
+    	    		
+    		    	//チャットテキストカウントの初期化
+    		    	cntLct = 0;
+    		    	
+    	            //なうワードの初期化
+    		    	liplisNowWord = liplisNowTopic.nameList.get(cntLnw);
+    		    	
+    	            //プレブエモーションセット
+    	            prvEmotion = nowEmotion;
+    	            
+    	            //なうエモーションの取得
+    	            nowEmotion = liplisNowTopic.emotionList.get(cntLnw);
+    	            
+    	            //なうポイントの取得
+    	            nowPoint = liplisNowTopic.pointList.get(cntLnw);
+    	            
+    		    	//インデックスインクリメント
+    		    	cntLnw++;
+    	    	}
+    	    }
+    	    //初回ワードチェック
+    	    else if (cntLnw == 0) {
+
+    	    	//チャットテキストカウントの初期化
+    	    	cntLct = 0;
+    	    	
+    	    	//なうワードの初期化
+    	    	liplisNowWord = liplisNowTopic.nameList.get(cntLnw);
+
+    	    	//次ワード遷移
+            	cntLnw++;
+    	    	
+    	        //空だったら、空じゃなくなるまで繰り返す
+    	        if (liplisNowWord.equals("")) {
+    	            do {
+    	            	//チェックエンド
+    	            	checkEnd(context);
+    	            	
+    	                //終了チェック
+    	                if (cntLnw > liplisNowTopic.nameList.get(cntLnw).length()) {break;}
+
+    	                //ナウワードの初期化
+    	                liplisNowWord = liplisNowTopic.nameList.get(cntLnw);
+    	                
+    	                //次ワード遷移
+    	            	cntLnw++;
+
+    	            } while (liplisNowWord.equals(""));
+    	        }
+    	    }
+    	    //おしゃべり中は何もしない
+    	    else {
+    	        
+    	    }
+    	    
+    	    //おしゃべり
+    	    liplisChatText = liplisChatText + liplisNowWord.substring(cntLct, cntLct+1);
+    	    cntLct++;
+    	    
+    	    return false;
+    	}
+    	catch(Exception e)
+    	{
+    		//終端設定
+    	    cntLnw = liplisNowTopic.nameList.size();
+    	    cntLct = liplisNowWord.length();
+    		
+    	    //チャットを中断する
+    	    checkEnd(context);
+    	    
+    	    
+    	    
+    	    //ログの送信
+    	    Log.d(LiplisDefine.LOG_TAG, "Error:" + errorClassName + "setText cntLnw:" + cntLnw + " cntLct:" + cntLct + " liplisNowWord Length:" + liplisNowWord.length() + " nameLstSize:" + liplisNowTopic.nameList.size() + " emoLstSize:" + liplisNowTopic.emotionList.size() + " poiLstSize:" + liplisNowTopic.pointList.size());
+    	    
+    		return false;
+    	}
+
+    }
+    
+    /// <summary>
+    //  MethodType : child
+    /// MethodName : chat
+    /// おしゃべりする
+    /// </summary>
+    private void chat(MsgChatMessage msg)
+    {
+        try
+    	{
+        	//チャット状態に移行
+        	flgChatting = true;
+        	
+        	String chatText = "";
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+        	//感情変化をさせるため、プレビューに0、現にエモーション値をセットする
+        	nowEmotion = Math.abs(msg.emeotion);
+        	nowPoint = msg.emeotion;
+        	prvEmotion = 0;
+        	
+        	//1文字づつ回す
+        	for(int idx = 0; idx < msg.msg.length(); idx++)
+        	{    		
+        		//リモートビューの取得
+                RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+        		
+                //スキップチェック
+                if(flgSkip)
+                {
+                	remoteView.setTextViewText(R.id.liplisTalkText, msg.msg);
+                	//クリックリスナーの更新
+            		setClickListener(remoteView);
+                    //ウィジェットの更新
+                    appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+                    
+                	//チャット状態の開放
+                	flgChatting = false;
+                	flgSkip = false;
+                }
+                
+        		//すわりチェック
+        		if(flgSitdown)
+        		{
+        			updateBodySitDown();
+        			break;
+        		}
+
+                //おしゃべり
+                chatText = chatText + msg.msg.substring(idx, idx+1);
+            	remoteView.setTextViewText(R.id.liplisTalkText, chatText);
+            	
+            	//ボディの更新
+        		updateBody(remoteView);
+                
+        		//クリックリスナーの更新
+        		setClickListener(remoteView);
+            	
+        		//アイコンクリックリスナー
+        		setClickListenerIcon(remoteView);
+        		
+                //ウィジェットの更新
+                appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+                
+                //スリープ
+                LiplisUtil.sleep(liplisRefresh);
+        	}
+        	
+        	//チャット状態の開放
+        	flgChatting = false;
+        	flgSkip = false;
+        	
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chat()"); 
+    	}
+    }
+    private void chat(MsgShortNews msg)
+    {
+        try
+    	{
+        	//現在のワードの文字数
+            String nowWord 		= "";	//現在読み込みの単語(wordIdxでカウント)
+        	String chatText = "";
+        	
+        	//チャット状態に移行
+        	flgChatting = true;
+
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	
+        	//1文字づつ回す
+        	for(int idx = 0; idx < msg.nameList.size(); idx++)
+        	{
+                //--- ワードセット、感情チェックフェーズ --------------------
+                //送りワード文字数チェック
+        	    if (idx != 0) {
+                    //なうワードの初期化
+                    nowWord = msg.nameList.get(idx);
+                    
+                    //プレブエモーションセット
+                    prvEmotion = nowEmotion;
+                    
+                    //なうエモーションの取得
+                    nowEmotion = msg.emotionList.get(idx);
+                    
+                    //なうポイントの取得
+                    nowPoint = msg.pointList.get(idx);
+        	    }
+        	    //初回ワードチェック
+        	    else if (idx == 0) {
+
+        	        nowWord = msg.nameList.get(idx);
+
+        	        //空だったら、空じゃなくなるまで繰り返す
+        	        if (nowWord.equals("")) {
+        	            do {
+        	                //次ワード遷移
+        	                idx++;
+        	                
+        	                //終了チェック
+        	                if (idx > msg.nameList.get(idx).length()) {break;}
+
+        	                //ナウワードの初期化
+        	                nowWord = msg.nameList.get(idx);
+
+        	            } while (nowWord.equals(""));
+        	        }
+        	    }
+        	    //おしゃべり中は何もしない
+        	    else {
+        	        
+        	    }
+        		
+        	    for(int kdx = 0; kdx < nowWord.length(); kdx++)
+        	    {
+            		//リモートビューの取得
+                    RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+
+            		//すわりチェック
+            		if(flgSitdown)
+            		{
+            			updateBodySitDown();
+            			break;
+            		}
+        	    	
+                    //おしゃべり
+                    chatText = chatText + nowWord.substring(kdx, kdx + 1);
+                	remoteView.setTextViewText(R.id.liplisTalkText, chatText);
+                	
+                	//ボディの更新
+            		updateBody(remoteView);
+                    
+            		//クリックリスナーの更新
+            		setClickListener(remoteView);
+            		
+            		//アイコンクリックリスナー
+            		setClickListenerIcon(remoteView);
+            		
+                    //ウィジェットの更新
+                    appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+                    
+                    //スリープ
+                    LiplisUtil.sleep(liplisRefresh);
+        	    }
+        	}
+        	
+        	//チャット状態の開放
+        	flgChatting = false;
+        	flgSkip = false;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: chat()");
+    	}
+    }
+    
+    //  MethodType : child
+    /// MethodName : updateBody
+    /// おてんば(フル動作)
+    /// </summary>
+    private boolean updateBody(RemoteViews remoteView)
+    {
+    	try
+    	{
+    		if(nowEmotion != prvEmotion && flgChatting){
+    			ob = olb.getLiplisBody(nowEmotion,nowPoint);
+    		}
+    		
+	        //--- 口パク --------------------
+	        //口パクカウント
+    		if(flgChatting)
+    		{
+    	        if(cntMouth == 1)	{cntMouth=2;}
+    	        else				{cntMouth=1;}
+    		}
+    		else
+    		{
+    			cntMouth=1;
+    		}
+
+	        //--- 目パチ --------------------
+	        //目パチカウント
+	        if(cntBlink == 0){cntBlink = getBlinkCnt();}
+	        else{cntBlink--;}
+	        
+	        //--- 描画 --------------------
+	        //画像はすべてできているので、感情変化を意識する必要はない
+	        remoteView.setImageViewResource(R.id.liplisImage, ob.getLiplisBodyId(getBlinkState(cntBlink), cntMouth));
+	        return true;
+		}
+		catch(Exception e)
+		{
+			olb = new ObjLiplisBody();
+			Log.d(LiplisDefine.LOG_TAG, "!!!updateBodyError!!!");
+			return false;
+		}
+    }
+    
+    //  MethodType : child
+    /// MethodName : updateBodyOtenba
+    /// おてんば(フル動作)
+    /// </summary>
+    private boolean updateText(RemoteViews remoteView)
+    {
+    	try
+    	{
+	        remoteView.setTextViewText(R.id.liplisTalkText, liplisChatText);
+	        return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: updateText()");
+			return false;
+		}
+    }
+    
+    //  MethodType : child
+    /// MethodName : runClock
+    /// 時計、バッテリー表示
+    /// </summary>
+    private void runClock(Context context)
+    {
+        try
+    	{
+        	//クロックチェック
+        	switchTalkClockCheck(true, context);
+        	
+        	//時計バッテリー表示の更新
+        	refleshClockAndBattery();
+        	
+        	//アイコンカウント
+        	iconCloseCheck();
+        	
+        	//フラグ設定
+        	reSetUpdateCount();
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: runClock()");
+    	}
+    }
+    
+    //  MethodType : child
+    /// MethodName : runClockTolk
+    /// 時計、バッテリーの発言
+    /// </summary>
+    private void runClockTolk()
+    {
+        try
+    	{
+
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: runClockTolk()");
+    	}
+    }
+    
+    //  MethodType : child
+    /// MethodName : updateClockAndBattery
+    /// 時計、バッテリー表示の更新
+    /// </summary>
+    private void refleshClockAndBattery()
+    {
+        try
+    	{
+        	//--- 描画じゅんびフェーズ --------------------
+        	//ウィジェットマネージャーの取得
+        	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(liplisContext);
+        	Log.d(LiplisDefine.LOG_TAG, "1: ");
+        	
+    		//リモートビューの取得
+            RemoteViews remoteView = new RemoteViews(liplisContext.getPackageName(), R.layout.widget);
+            Log.d(LiplisDefine.LOG_TAG, "2: ");
+
+            //時刻オブジェクトの更新
+            oc.updateClockObject();
+            
+            //時計＆バッテリー表示の更新
+            updateClock(remoteView);
+            Log.d(LiplisDefine.LOG_TAG, "3: ");
+        	
+        	//ボディの更新
+    		updateBody(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "4: ");
+            
+    		//クリックリスナーの更新
+    		setClickListener(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "5: ");
+        	
+    		//アイコンクリックリスナー
+    		setClickListenerIcon(remoteView);
+    		Log.d(LiplisDefine.LOG_TAG, "6: ");
+    		
+            //ウィジェットの更新
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView);
+            Log.d(LiplisDefine.LOG_TAG, "7: ");
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: runClock()");
+    	}
+    }
+    
+    //  MethodType : child
+    /// MethodName : updateClock
+    /// 時計＆バッテリーの表示更新
+    /// </summary>
+    private boolean updateClock(RemoteViews remoteView)
+    {
+    	int batteryRate = 0;
+    	try
+    	{
+    		remoteView.setImageViewResource(R.id.imYear1, oc.getYear1());
+    		remoteView.setImageViewResource(R.id.imYear2, oc.getYear2());
+    		remoteView.setImageViewResource(R.id.imYear3, oc.getYear3());
+    		remoteView.setImageViewResource(R.id.imYear4, oc.getYear4());
+    		remoteView.setImageViewResource(R.id.imMonth1, oc.getMonth1());
+    		remoteView.setImageViewResource(R.id.imMonth2, oc.getMonth2());
+    		remoteView.setImageViewResource(R.id.imDay1, oc.getDay1());
+    		remoteView.setImageViewResource(R.id.imDay2, oc.getDay2());
+    		    		
+    		remoteView.setImageViewResource(R.id.imHour1, oc.getHour1());
+    		remoteView.setImageViewResource(R.id.imHour2, oc.getHour2());
+    		remoteView.setImageViewResource(R.id.imMin1, oc.getMin1());
+    		remoteView.setImageViewResource(R.id.imMin2, oc.getMin2());
+    		
+    		batteryRate = obt.getBatteryNowLevel();
+    		
+    		
+    		if(batteryRate < 5)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 10)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 20)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 30)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 40)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 50)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 60)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 70)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 80)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.battery_non);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate < 90)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.battery_non);
+    		}
+    		else if(batteryRate > 90)
+    		{
+    			remoteView.setImageViewResource(R.id.imBattery01, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery02, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery03, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery04, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery05, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery06, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery07, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery08, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery09, R.drawable.ico_batterygage);
+    			remoteView.setImageViewResource(R.id.imBattery10, R.drawable.ico_batterygage);
+    		}
+
+    		
+    		
+    		
+    		
+    		
+    		
+    		//--- 描画 --------------------
+	        //感情値とポイントをランダムで取得
+    		Random rnd = new Random();
+
+            int ran = rnd.nextInt(9) + 1;
+            int point = rnd.nextInt(3) - 1 ;
+            
+    		ob = olb.getLiplisBody(ran,point);
+    		
+    		//描画
+	        remoteView.setImageViewResource(R.id.liplisImage, ob.getLiplisBodyId(1, 0));
+    		
+	        return true;
+		}
+		catch(Exception e)
+		{
+			Log.i(LiplisDefine.LOG_TAG, "Error: updateClock()");
+			return false;
+		}
+    }
+    
+    
+    ///====================================================================
+    ///
+    ///                           定型おしゃべり
+    ///                         
+    ///====================================================================
+    
+    //  MethodType : child
+    /// MethodName : greet
+    /// 挨拶する
+    /// </summary>
+    private void greet(Context context)
+    { 
+        try
+    	{
+        	Log.d(LiplisDefine.LOG_TAG, "greet()");
+        	
+        	//時計モードの場合は発言させない
+        	if(op.getLpsMode() == 4){return;}
+        	
+        	//挨拶の選定
+        	liplisNowTopic = olc.getGreet();
+        	
+        	//空だったらろーでぃんぐなう♪
+        	if(liplisNowTopic.getMessage().equals(""))
+        	{
+        		liplisNowTopic = new MsgShortNews("ろーでぃんぐなう♪",0,0);
+        	}
+        	
+        	//チャット情報の初期化
+        	initChatInfo();
+        	
+        	//設定の取得
+        	loadSetting(context);
+        	
+        	//おしゃべりスレッドスタート
+        	chatStart(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: greet()");
+    	}
+    	
+    }
+    
+    //  MethodType : child
+    /// MethodName : batteryInfo
+    /// バッテリー情報のお知らせ
+    /// </summary>
+    private void batteryInfo(Context context)
+    {
+    	Log.d(LiplisDefine.LOG_TAG, "batteryInfo()");
+    	
+        try
+    	{
+        	//座り中なら回避
+        	if(flgSitdown){return;}
+        	    	
+        	//挨拶の選定
+        	liplisNowTopic = olc.getBatteryInfo(obt.getBatteryNowLevel());
+        	
+        	//空だったらろーでぃんぐなう♪
+        	if(liplisNowTopic.getMessage().equals(""))
+        	{
+        		liplisNowTopic = new MsgShortNews(obt.getBatteryNowLevel() + "%",0,0);
+        	}
+        	
+        	//チャット情報の初期化
+        	initChatInfo();
+        	
+        	//おしゃべりスレッドスタート
+        	chatStart(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: batteryInfo()");
+    	}
+    }
+    
+    //  MethodType : child
+    /// MethodName : batteryInfo
+    /// 時刻情報のお知らせ
+    /// </summary>
+    private void clockInfo(Context context)
+    {
+    	Log.d(LiplisDefine.LOG_TAG, "clockInfo()");
+    	
+        try
+    	{
+        	//座り中なら回避
+        	if(flgSitdown){return;}
+
+        	//挨拶の選定
+        	liplisNowTopic = olc.getClockInfo();
+        	
+        	//空だったら現時時刻のみを返す
+        	if(liplisNowTopic.getMessage().equals(""))
+        	{
+        		liplisNowTopic = new MsgShortNews(LiplisUtil.getNowTime(Calendar.MINUTE),0,0);
+        	}
+        	
+        	//チャット情報の初期化
+        	initChatInfo();
+        	
+        	//おしゃべりスレッドスタート
+        	chatStart(context);
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: clockInfo()");
+    	}
+    }
+    
+
+    
+    ///====================================================================
+    ///
+    ///                       ボディ更新詳細処理
+    ///                         
+    ///====================================================================
+    
+    //  MethodType : child
+    /// MethodName : getBlinkCnt
+    /// まばたきカウントの取得
+    /// </summary>
+    private int getBlinkCnt()
+    {
+    	try
+    	{
+			Random rnd = new Random();
+			return rnd.nextInt(17) + 17;
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: getBlinkCnt()");
+    		return 10;
+    	}
+    }
+    
+    /// <summary>
+    /// getBlinkCnt
+    /// まばたきカウントの取得
+    /// </summary>
+    private int getBlinkState(int brinkCnt)
+    {
+        try
+    	{
+        	switch(brinkCnt)
+        	{
+        	case 0:
+        		return 1;
+        	case 1:
+        		return 2;
+        	case 2:
+        		return 3;
+        	case 3:
+        		return 2;
+        	default:
+        		return 1;
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		Log.i(LiplisDefine.LOG_TAG, "Error: getBlinkState()");
+    		return 1;
+    	}
+    }
+}

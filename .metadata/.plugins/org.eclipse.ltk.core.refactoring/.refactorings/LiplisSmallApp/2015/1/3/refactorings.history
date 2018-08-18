@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="パッケージ名 &apos;little.cute&apos; を &apos;little.cute.renew&apos; に変更します&#x0D;&#x0A;- 元のプロジェクト: &apos;LiplisSmallApp&apos;&#x0D;&#x0A;- オリジナル要素: &apos;LiplisSmallApp/src/little.cute&apos;&#x0D;&#x0A;- 名前変更済み要素: &apos;LiplisSmallApp/src/little.cute.renew&apos;&#x0D;&#x0A;- リファクタリングされた要素の参照を更新&#x0D;&#x0A;- コメントおよびストリング内のテキスト出現箇所の更新&#x0D;&#x0A;- パッケージのサブパッケージを名前変更" description="パッケージ名 &apos;little.cute&apos; を変更します" flags="589830" hierarchical="true" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;little.cute" name="little.cute.renew" qualified="false" references="true" stamp="1421336072684" textual="false" version="1.0"/>
+</session>

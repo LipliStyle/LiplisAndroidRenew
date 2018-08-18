@@ -1,0 +1,19 @@
+INDEX VERSION 1.127+D:\PrjEclipse\LiplisAndroidRenew\.metadata\.plugins\org.eclipse.jdt.core
+922643179.index
+612463903.index
+3319979255.index
+3037246197.index
+791433497.index
+1124743644.index
+1372339636.index
+243116069.index
+612504521.index
+854138993.index
+470707187.index
+3003342848.index
+367881512.index
+3053295055.index
+1170557908.index
+1761745648.index
+937920740.index
+725293955.index

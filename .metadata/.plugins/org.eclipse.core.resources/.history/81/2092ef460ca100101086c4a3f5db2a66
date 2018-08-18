@@ -1,0 +1,32 @@
+package rot.lps.Fct;
+
+import rot.lps.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.os.Bundle;
+import android.widget.ImageView;
+
+public class FctLiplisBody {
+	
+	public  void createBody(Bitmap window, Bitmap body,Bitmap eye, Bitmap mouth) {
+	  	Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.yamashita);
+	  	Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.umayahara);
+
+	  	int width = bitmap1.getWidth();
+	  	int height = bitmap1.getHeight();
+	  
+	  	System.out.println(width);
+	  	System.out.println(height);
+	  	Bitmap newBitmap = Bitmap.createBitmap(width, height*2, Bitmap.Config.ARGB_8888); 
+		
+	  	Canvas offScreen = new Canvas(newBitmap); 
+    	offScreen.drawBitmap(bitmap1, 0, height, (Paint)null); 
+        offScreen.drawBitmap(bitmap2, 0, 0, (Paint)null); 
+
+        
+	  	ImageView image = (ImageView)findViewById(R.id.ImageView01);
+	  	image.setImageBitmap(newBitmap);
+	}
+}

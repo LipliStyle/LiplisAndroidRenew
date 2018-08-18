@@ -1,0 +1,198 @@
+//=======================================================================
+//  ClassName : LiplisWidgetTwitterConfiguration
+//  概要      : ツイッターの設定画面
+//
+//	extends   : Activity
+//	impliments:
+//
+//	レイアウトファイル : configuration.xml
+//
+//  プリファレンスには変換値ではなく、設定値をのものを入力する!
+//
+//  LiplisAndroidシステム
+//  Copyright(c) 2011-2011 sachin. All Rights Reserved.
+//=======================================================================
+package little.cute.Activity;
+
+import little.cute.R;
+import little.cute.Common.LiplisDefine;
+import little.cute.Fct.FctGUIDCreator;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+
+public class LiplisWidgetTwitterConfiguration extends Activity {
+    /// <summary>
+    /// onCreate
+    /// 作成時処理
+    /// </summary>
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	//親クラスの
+        super.onCreate(savedInstanceState);
+
+        //レイアウトのセット
+        setContentView(R.layout.twitterconfiguration);
+
+        //クローズボタンのセット
+        setCloseButton();
+
+        //セーブボタンのセット
+        setSaveButton();
+//
+//        //ツイッターパスコード登録ボタン
+//        setBtnSetTwitterPassCode();
+//
+//
+//        //プリファレンスから読みだしてセットする
+//        getPriference();
+    }
+
+
+    /// <summary>
+    /// setSaveButton
+    /// セーブボタンのハンドらセット
+    /// </summary>
+    private void setSaveButton()
+    {
+        //ボタンの配置
+        Button closeButton = (Button) findViewById(R.id.btnTwitterConfigSave);
+
+        //クリックリスナーの作成
+        closeButton.setOnClickListener(new OnClickListener() {
+		  	//クリックイベント
+			public void onClick(View v) {
+				setPriference();
+				finish();
+		    }
+		});
+    }
+
+    /// <summary>
+    /// setCloseButton
+    /// クローズボタンのハンドらセット
+    /// </summary>
+    private void setCloseButton()
+    {
+        //ボタンの配置
+        Button closeButton = (Button) findViewById(R.id.btnTwitterConfigClose);
+
+        //クリックリスナーの作成
+        closeButton.setOnClickListener(new OnClickListener() {
+		  	//クリックイベント
+			public void onClick(View v) {
+				finish();
+		    }
+		});
+    }
+
+    /// <summary>
+    /// setBtnSetTwitterPassCode
+    /// ツイッターパスコード登録ボタン
+    /// </summary>
+    private void setBtnSetTwitterPassCode()
+    {
+        //ボタンの配置
+        Button button = (Button) findViewById(R.id.btnSetTwitterPassCode);
+
+        //クリックリスナーの作成
+        button.setOnClickListener(new OnClickListener() {
+		  	//クリックイベント
+			public void onClick(View v) {
+				finish();
+		    }
+		});
+    }
+
+
+
+
+
+    ///====================================================================
+    ///
+    ///                         プリファレンス
+    ///
+    ///====================================================================
+
+    private void setPriference()
+    {
+        //プリファレンスの取得
+        final SharedPreferences config = getSharedPreferences(LiplisDefine.PREFS_NAME, MODE_WORLD_WRITEABLE);
+
+        //プリファレンスの呼び出し
+        SharedPreferences.Editor configEditor = config.edit();
+
+        //今回設定した値をプリファレンスにプット
+        configEditor.putInt(LiplisDefine.PREFS_TWITTER_MODE, 0);
+        configEditor.putInt(LiplisDefine.PREFS_TWITTER_INTERVAL, 1);
+
+
+        //変更をコミット
+        configEditor.commit();
+    }
+
+    private void getPriference()
+    {
+        //プリファレンスの取得
+        final SharedPreferences config = getSharedPreferences(LiplisDefine.PREFS_NAME, MODE_WORLD_WRITEABLE);
+
+        setPrfTwitterMode(config.getInt(LiplisDefine.PREFS_TWITTER_MODE, 0));
+        setPrfTwitterInterval(config.getInt(LiplisDefine.PREFS_TWITTER_INTERVAL, 0));
+
+    }
+
+
+
+    ///====================================================================
+    ///
+    ///                         プリファレンス
+    ///
+    ///====================================================================
+
+    /// <summary>
+    /// setPrfTwitterMode
+    /// ツイッターモードの設定
+    /// </summary>
+    private void setPrfTwitterMode(int mode)
+    {
+        final RadioButton rbTwitterMode1 = (RadioButton)findViewById(R.id.rbTwitterMode1);
+        final RadioButton rbTwitterMode2 = (RadioButton)findViewById(R.id.rbTwitterMode2);
+
+    	try
+    	{
+    		if(mode == 0){rbTwitterMode1.setChecked(true);	}
+    		else if(mode == 1){	rbTwitterMode2.setChecked(true);}
+
+            return;
+    	}
+    	catch(Exception e)
+    	{
+    		rbTwitterMode1.setChecked(true);
+    		return;
+
+    	}
+    }
+
+    /// <summary>
+    /// setPrfTwitterInterval
+    /// ツイッターインターヴァルの設定
+    /// </summary>
+    private void setPrfTwitterInterval(int idx)
+    {
+    	final Spinner spinner = (Spinner) findViewById(R.id.spTwitterInterval);
+    	try
+    	{
+    		spinner.setSelection(idx);
+    	}
+    	catch(Exception e)
+    	{
+    		spinner.setSelection(0);
+    	}
+    }
+
+}

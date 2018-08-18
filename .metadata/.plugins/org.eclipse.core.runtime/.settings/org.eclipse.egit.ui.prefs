@@ -1,0 +1,4 @@
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>2015/11/29 Liplis4.5.4</message>\r\n<message>2015/11/03 Liplis4.5.3</message>\r\n<message>ver4.5.2 ClalisApi4.1\u5BFE\u5FDC</message>\r\n<message>2015/01/25 ver4.5.0</message>\r\n<message>2015/01/25 ver4.5.2</message>\r\n<message>\u753B\u50CFRenew\u79FB\u884C</message>\r\n<message>\u540D\u524D\u7A7A\u9593\u3092Renew\u306B\u5909\u66F4&\#x0A;\u7ACB\u3061\u7D75\u753B\u50CF\u3092Renew\u306B\u5909\u66F4</message>\r\n<message>2014/07/19</message>\r\n<message>2014/07/13</message>\r\n<message>\u30E9\u30A4\u30D6\u30E9\u30EA\u5DEE\u3057\u66FF\u3048</message>\r\n</messages>
+eclipse.preferences.version=1
+show_git_prefix_warning=false
+show_home_drive_warning=false

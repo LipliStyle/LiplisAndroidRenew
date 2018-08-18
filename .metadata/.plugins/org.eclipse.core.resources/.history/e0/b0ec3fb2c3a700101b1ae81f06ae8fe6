@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--================================================================-->
+<!-- xmlName		: configuration.xml								-->
+<!-- 概要			: コンフィグ画面定義									-->
+<!-- 																-->
+<!--  LiplisAndroidシステム     									 		-->
+<!--  Copyright(c) 2011-2011 sachin. All Rights Reserved. 			-->
+<!--================================================================-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView android:layout_gravity="center_horizontal" android:id="@+id/textView1" android:text="@string/configure_intro" android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+    <TextView android:layout_gravity="center_horizontal" android:text="@string/configure_up_rate" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/TextView02"></TextView>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/ilUpRate">
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/LinearLayout01">
+            <RadioGroup android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/RadioGroup01" android:orientation="horizontal">
+                <RadioButton android:layout_height="wrap_content" android:checked="true" android:text="おしゃべり" android:layout_width="wrap_content" android:id="@+id/rbRate1"></RadioButton>
+                <RadioButton android:layout_height="wrap_content" android:text="ふつう" android:layout_width="wrap_content" android:id="@+id/rbRate2"></RadioButton>
+                <RadioButton android:layout_height="wrap_content" android:text="ひかえめ" android:layout_width="wrap_content" android:id="@+id/rbRate3"></RadioButton>
+            </RadioGroup>
+        </LinearLayout>
+        <RadioGroup android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/rdUpRate" android:orientation="horizontal">
+            <RadioButton android:layout_height="wrap_content" android:checked="true" android:text="おしゃべり" android:layout_width="wrap_content" android:id="@+id/radio0"></RadioButton>
+            <RadioButton android:layout_height="wrap_content" android:text="ふつう" android:layout_width="wrap_content" android:id="@+id/radio1"></RadioButton>
+            <RadioButton android:layout_height="wrap_content" android:text="ひかえめ" android:layout_width="wrap_content" android:id="@+id/radio2"></RadioButton>
+        </RadioGroup>
+    </LinearLayout>
+    <TextView android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/textViewUpRate" android:text="@string/configure_ac_rate"></TextView>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/LinearLayout02">
+        <RadioGroup android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/RadioGroup02" android:orientation="horizontal">
+            <RadioButton android:layout_height="wrap_content" android:checked="true" android:layout_width="wrap_content" android:text="おてんば" android:id="@+id/rbActive1"></RadioButton>
+            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="ひかえめ" android:id="@+id/rbActive2"></RadioButton>
+            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="エコ" android:id="@+id/rbActive3"></RadioButton>
+        </RadioGroup>
+    </LinearLayout>
+    <Button android:layout_gravity="bottom" android:text="@string/save_config" android:id="@+id/save_button" android:layout_height="wrap_content" android:layout_width="fill_parent"></Button>
+</LinearLayout>

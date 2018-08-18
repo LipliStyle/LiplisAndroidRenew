@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;LiplisSmallAppConfiguration.java&apos; to &apos;LiplisSmallApp/src/little.cute.Activity&apos;&#x0D;&#x0A;- 元のプロジェクト: &apos;LiplisSmallApp&apos;&#x0D;&#x0A;- 宛先要素: &apos;LiplisSmallApp/src/little.cute.Activity&apos;&#x0D;&#x0A;- オリジナル要素: &apos;little.cute.Activity.LiplisSmallAppConfiguration.java&apos;" description="コンパイル単位をコピー" destination="/src&lt;little.cute.Activity" element1="/src&lt;little.cute.Activity{LiplisSmallAppConfiguration.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1381743165132" units="1" version="1.0"/>
+</session>

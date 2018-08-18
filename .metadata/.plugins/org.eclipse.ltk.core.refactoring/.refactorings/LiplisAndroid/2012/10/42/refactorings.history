@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="リソース名 &apos;LiplisAndroid/res/drawable-nodpi/sitdown.png&apos; を &apos;sleep.png&apos; に変更します" description="リソース &apos;sitdown.png&apos; の名前変更" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/drawable-nodpi/sitdown.png" name="sleep.png" stamp="1350213124133" updateReferences="true"/>&#x0A;<refactoring comment="リソース名 &apos;LiplisAndroid/res/xml/xmlchat.xml&apos; を &apos;chat.xml&apos; に変更します" description="リソース &apos;xmlchat.xml&apos; の名前変更" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/xml/xmlchat.xml" name="chat.xml" stamp="1350223136280" updateReferences="true"/>
+</session>

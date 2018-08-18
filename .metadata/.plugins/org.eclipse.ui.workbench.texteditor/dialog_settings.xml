@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="Android" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="android"/>
+			<item value="ando"/>
+			<item value="1.1"/>
+			<item value="getShortNews"/>
+			<item value="getn"/>
+			<item value="getto"/>
+			<item value="getChatTalkResponse"/>
+			<item value="api"/>
+		</list>
+		<list key="replacehistory">
+			<item value="protected"/>
+			<item value=""/>
+			<item value="R"/>
+			<item value="btnSelectVoice"/>
+			<item value="String"/>
+			<item value=";"/>
+			<item value="calendar.get(Calendar.MONTH) + 1"/>
+			<item value="or"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="377" key="DIALOG_WIDTH"/>
+		<item value="1|メイリオ|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|メイリオ" key="DIALOG_FONT_NAME"/>
+		<item value="515" key="DIALOG_HEIGHT"/>
+		<item value="227" key="DIALOG_Y_ORIGIN"/>
+		<item value="2254" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

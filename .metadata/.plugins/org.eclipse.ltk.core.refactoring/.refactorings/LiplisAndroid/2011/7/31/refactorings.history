@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="メソッド名 &apos;little.cute.Widget.LiplisWidgetProvider.sitdown()&apos; を &apos;sitDown&apos; に変更します&#x0D;&#x0A;- 元のプロジェクト: &apos;LiplisAndroid&apos;&#x0D;&#x0A;- オリジナル要素: &apos;little.cute.Widget.LiplisWidgetProvider.sitdown()&apos;&#x0D;&#x0A;- 名前変更済み要素: &apos;little.cute.Widget.LiplisWidgetProvider.sitDown()&apos;&#x0D;&#x0A;- リファクタリングされた要素の参照を更新" delegate="false" deprecate="false" description="メソッド名 &apos;sitdown&apos; を変更します" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;little.cute.Widget{LiplisWidgetProvider.java[LiplisWidgetProvider~sitdown" name="sitDown" references="true" stamp="1311772192856" version="1.0"/>
+</session>

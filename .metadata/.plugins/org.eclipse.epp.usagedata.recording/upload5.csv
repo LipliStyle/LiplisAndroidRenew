@@ -1,0 +1,326 @@
+what,kind,bundleId,bundleVersion,description,time
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349669228655
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669734482
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349669734517
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669734523
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669736132
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669737924
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669749988
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349669749996
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669752699
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669754082
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669767534
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669770601
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669795290
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349669795308
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669799830
+error,log,,,"selecter.xml: error!",1349669819023
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669822942
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669830387
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349669830950
+error,log,,,"selecter.xml: error!",1349669833972
+error,log,,,"selecter.xml: error!",1349669834947
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349669835068
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669837775
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669841546
+error,log,,,"selecter.xml: error!",1349669841706
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669844166
+error,log,,,"selecter.xml: error!",1349669854374
+error,log,,,"selecter.xml: error!",1349669859821
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669862519
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349669862865
+error,log,,,"selecter.xml: error!",1349669864002
+error,log,,,"selecter.xml: error!",1349669864217
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349669864338
+error,log,,,"selecter.xml: error!",1349669865234
+error,log,,,"selecter.xml: error!",1349669866947
+error,log,,,"selecter.xml: error!",1349669867162
+error,log,,,"selecter.xml: error!",1349669871594
+error,log,,,"selecter.xml: error!",1349669874128
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349669874246
+error,log,,,"selecter.xml: error!",1349669875145
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349669875261
+error,log,,,"selecter.xml: error!",1349669876102
+error,log,,,"selecter.xml: error!",1349669877203
+error,log,,,"selecter.xml: error!",1349669877445
+error,log,,,"selecter.xml: error!",1349669878525
+error,log,,,"selecter.xml: error!",1349669879362
+error,log,,,"selecter.xml: error!",1349669879574
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669886543
+error,log,,,"selecter.xml: error!",1349669890035
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669901044
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669902433
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349669904986
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669905895
+error,log,,,"selecter.xml: error!",1349669905977
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669907371
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349669919474
+error,log,,,"selecter.xml: error!",1349669920587
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669920704
+error,log,,,"selecter.xml: error!",1349669920746
+error,log,,,"selecter.xml: error!",1349669923195
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669924185
+error,log,,,"selecter.xml: error!",1349669931645
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669933499
+error,log,,,"selecter.xml: error!",1349669933606
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669934835
+error,log,,,"selecter.xml: error!",1349669943807
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669945689
+error,log,,,"selecter.xml: error!",1349669945792
+error,log,,,"selecter.xml: error!",1349669946461
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669948895
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349669958627
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349669959917
+error,log,,,"selecter.xml: error!",1349669969006
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669970721
+error,log,,,"selecter.xml: error!",1349669970827
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669971681
+error,log,,,"selecter.xml: error!",1349669978164
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349669979641
+error,log,,,"selecter.xml: error!",1349669979687
+error,log,,,"selecter.xml: error!",1349669980032
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669981239
+error,log,,,"selecter.xml: error!",1349669987036
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349669988995
+error,log,,,"selecter.xml: error!",1349669989106
+error,log,,,"selecter.xml: error!",1349669989766
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349669989882
+error,log,,,"selecter.xml: error!",1349669991444
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349669999065
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670007105
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670010967
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670015521
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670041661
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670042745
+error,log,,,"selecter.xml: error!",1349670043517
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670043664
+error,log,,,"selecter.xml: error!",1349670054172
+error,log,,,"selecter.xml: error!",1349670061704
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670062617
+error,log,,,"selecter.xml: error!",1349670063809
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670063971
+error,log,,,"selecter.xml: error!",1349670064636
+error,log,,,"selecter.xml: error!",1349670068472
+error,log,,,"selecter.xml: error!",1349670068727
+error,log,,,"selecter.xml: error!",1349670068872
+error,log,,,"selecter.xml: error!",1349670069317
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670070536
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670074980
+error,log,,,"selecter.xml: error!",1349670075002
+error,log,,,"WARNING: Prevented recursive attempt to activate part org.eclipse.ui.views.PropertySheet while still in the middle of activating part com.android.ide.eclipse.editors.layout.LayoutEditor",1349670075140
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670081344
+error,log,,,"selecter.xml: error!",1349670092542
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670096942
+error,log,,,"selecter.xml: error!",1349670096954
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670101734
+error,log,,,"selecter.xml: error!",1349670107158
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670109138
+error,log,,,"selecter.xml: error!",1349670109200
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670112610
+error,log,,,"selecter.xml: error!",1349670113723
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670113894
+error,log,,,"selecter.xml: error!",1349670118948
+error,log,,,"selecter.xml: error!",1349670123402
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670123580
+error,log,,,"selecter.xml: error!",1349670125914
+error,log,,,"selecter.xml: error!",1349670128431
+error,log,,,"selecter.xml: error!",1349670131828
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670132033
+error,log,,,"selecter.xml: error!",1349670133545
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670133837
+error,log,,,"selecter.xml: error!",1349670134505
+error,log,,,"selecter.xml: error!",1349670137344
+error,log,,,"selecter.xml: error!",1349670137597
+error,log,,,"selecter.xml: error!",1349670137751
+error,log,,,"selecter.xml: error!",1349670141223
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670141437
+error,log,,,"selecter.xml: error!",1349670142040
+error,log,,,"selecter.xml: error!",1349670144241
+error,log,,,"selecter.xml: error!",1349670144502
+error,log,,,"selecter.xml: error!",1349670144665
+error,log,,,"selecter.xml: error!",1349670146590
+error,log,,,"selecter.xml: error!",1349670149939
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670151471
+error,log,,,"selecter.xml: error!",1349670158766
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670161767
+error,log,,,"selecter.xml: error!",1349670161777
+error,log,,,"selecter.xml: error!",1349670161946
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670163814
+error,log,,,"selecter.xml: error!",1349670170142
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670179641
+error,log,,,"selecter.xml: error!",1349670179653
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670182358
+error,log,,,"selecter.xml: error!",1349670187230
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670189609
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670191554
+error,log,,,"selecter.xml: error!",1349670196013
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670198999
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670200066
+error,log,,,"selecter.xml: error!",1349670204293
+error,log,,,"selecter.xml: error!",1349670206856
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349670206987
+error,log,,,"selecter.xml: error!",1349670208549
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349670221229
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670228139
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349670244304
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349670246934
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670255170
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670263283
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670265467
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670271634
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670273756
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670275844
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670278533
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670287242
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670291763
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670295383
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349670301866
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349670303002
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349670303400
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349670305993
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349670306711
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349670308730
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349670313670
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349670313699
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670315114
+error,log,,,"selecter.xml: error!",1349670316715
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670316892
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670322011
+error,log,,,"selecter.xml: error!",1349670336113
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349670340359
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670343290
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670344313
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670346892
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670348642
+error,log,,,"selecter.xml: error!",1349670355759
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349670357827
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670359474
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670360593
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670363337
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670365929
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670367004
+error,log,,,"selecter.xml: error!",1349670372973
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670374326
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349670384865
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670387027
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670387834
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670390382
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670391657
+error,log,,,"selecter.xml: error!",1349670396476
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.resources.ResourcesEditor",1349670398419
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349670399867
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349670400944
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349670403108
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349670403958
+error,log,,,"selecter.xml: error!",1349670407966
+error,log,,,"selecter.xml: error!",1349670408874
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349670409013
+error,log,,,"selecter.xml: error!",1349670410561
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349670413489
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349670419291
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671068053
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671781076
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671782405
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671784973
+error,log,,,"selecter.xml: error!",1349671785074
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671785939
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671815026
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671817754
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671819393
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671819872
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349671830968
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349672110025
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349672817508
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349672822248
+error,log,,,"selecter.xml: error!",1349672822372
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349672822566
+error,log,,,"selecter.xml: error!",1349672822876
+error,log,,,"selecter.xml: error!",1349672823083
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1349672823225
+error,log,,,"selecter.xml: error!",1349672823830
+error,log,,,"selecter.xml: error!",1349672825141
+error,log,,,"selecter.xml: error!",1349672826539
+error,log,,,"selecter.xml: error!",1349672826790
+error,log,,,"selecter.xml: error!",1349672836514
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349672837831
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349672840185
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349672841188
+error,log,,,"selecter.xml: error!",1349672841288
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1349672842177
+error,log,,,"selecter.xml: error!",1349672855335
+error,log,,,"selecter.xml: error!",1349672887121
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1349672887257
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349672888327
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.selectAll",1349672889387
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1349672889748
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349672889917
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1349672893760
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349672896245
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349672898145
+error,log,,,"selecter.xml: error!",1349672898377
+error,log,,,"selecter.xml: error!",1349672904836
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672904964
+error,log,,,"selecter.xml: error!",1349672905804
+error,log,,,"selecter.xml: error!",1349672906403
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672906529
+error,log,,,"selecter.xml: error!",1349672908395
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349672913849
+error,log,,,"selecter.xml: error!",1349672913968
+error,log,,,"selecter.xml: error!",1349672914255
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672914422
+error,log,,,"selecter.xml: error!",1349672915191
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672915366
+activated,editor,com.android.ide.eclipse.adt,10.0.1.v201103111512-110841,"com.android.ide.eclipse.editors.layout.LayoutEditor",1349672916971
+error,log,,,"selecter.xml: error!",1349672917111
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1349672920987
+error,log,,,"selecter.xml: error!",1349672920993
+error,log,,,"selecter.xml: error!",1349672921677
+error,log,,,"selecter.xml: error!",1349672922592
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672922763
+error,log,,,"selecter.xml: error!",1349672926553
+error,log,,,"selecter.xml: error!",1349672929233
+error,log,,,"selecter.xml: error!",1349672931212
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672931391
+error,log,,,"selecter.xml: error!",1349672932589
+error,log,,,"selecter.xml: error!",1349672932816
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672932972
+error,log,,,"selecter.xml: error!",1349672933349
+error,log,,,"selecter.xml: error!",1349672933527
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672933673
+error,log,,,"selecter.xml: error!",1349672935847
+error,log,,,"selecter.xml: error!",1349672936657
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672936814
+error,log,,,"selecter.xml: error!",1349672939562
+error,log,,,"selecter.xml: error!",1349672941079
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672941228
+error,log,,,"selecter.xml: error!",1349672941346
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672941506
+error,log,,,"selecter.xml: error!",1349672941613
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672941776
+error,log,,,"selecter.xml: error!",1349672941865
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672942034
+error,log,,,"selecter.xml: error!",1349672942660
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672942814
+error,log,,,"selecter.xml: error!",1349672943199
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672943363
+error,log,,,"selecter.xml: error!",1349672943607
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672943776
+error,log,,,"selecter.xml: error!",1349672944205
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672944369
+error,log,,,"selecter.xml: error!",1349672944662
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1349672944827
+error,log,,,"selecter.xml: error!",1349672947794
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672947972
+error,log,,,"selecter.xml: error!",1349672950324
+error,log,,,"selecter.xml: error!",1349672952528
+error,log,,,"selecter.xml: error!",1349672954664
+error,log,,,"selecter.xml: error!",1349672954960
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672955122
+error,log,,,"selecter.xml: error!",1349672958962
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672959139
+error,log,,,"selecter.xml: error!",1349672960497
+error,log,,,"selecter.xml: error!",1349672960677
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672960837
+error,log,,,"selecter.xml: error!",1349672980156
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.delete",1349672980329
+error,log,,,"selecter.xml: error!",1349672981693

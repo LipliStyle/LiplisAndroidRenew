@@ -1,0 +1,77 @@
+{
+  "C:\\AndroidSDK\\platforms\\android-4\\android.jar": {
+    "location": "C:\\AndroidSDK\\platforms\\android-4\\android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\AndroidSDK\\platforms\\android-4\\android.jar\u0027. Neither fingerprint \u0027957fde040ce9e3310b6ea179006ac4fdd6aa52ae\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\gen": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\gen",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\gen\u0027. Skipped."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\src": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\src\u0027. Skipped."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-3.0.3.jar": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-3.0.3.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-3.0.3.jar\u0027. Neither fingerprint \u0027fd32f6a458405bcdd77b68d0c6099a65203da009\u0027 nor symbolic name \u0027org.twitter4j.twitter4j-core\u0027 are known."
+  },
+  "C:\\AndroidSDK\\platforms\\android-16\\android.jar": {
+    "location": "C:\\AndroidSDK\\platforms\\android-16\\android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\AndroidSDK\\platforms\\android-16\\android.jar\u0027. Neither fingerprint \u002747ffff881d2fe54d5c646fcc3a646bf291008448\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisSmallApp\\src": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisSmallApp\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisSmallApp\\src\u0027. Skipped."
+  },
+  "Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar": {
+    "location": "Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar\u0027. Neither fingerprint \u00277aff97a42565296c21fff6cc3cedbd2555c1872e\u0027 nor symbolic name \u0027com.sony.smallapp\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\bin\\liplisandroid.jar\u0027. Neither fingerprint \u0027d6a948a7a0189497752cdbff99fcc5c68e9b302c\u0027 nor symbolic name \u0027liplisandroid\u0027 are known."
+  },
+  "C:\\AndroidSDK\\sdk\\platforms\\android-4\\android.jar": {
+    "location": "C:\\AndroidSDK\\sdk\\platforms\\android-4\\android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\AndroidSDK\\sdk\\platforms\\android-4\\android.jar\u0027. Neither fingerprint \u0027957fde040ce9e3310b6ea179006ac4fdd6aa52ae\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-4.0.2.jar": {
+    "location": "D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-4.0.2.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027D:\\PrjEclipse\\LiplisAndroid\\LiplisAndroid\\libs\\twitter4j-core-4.0.2.jar\u0027. Neither fingerprint \u0027381cf31e9200c2902782f17248d2af18e2ab4c56\u0027 nor symbolic name \u0027org.twitter4j.twitter4j-core\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\gen": {
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\gen",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\gen\u0027. Skipped."
+  },
+  "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\src": {
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\src\u0027. Skipped."
+  },
+  "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\bin\\liplisandroid.jar": {
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\bin\\liplisandroid.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\bin\\liplisandroid.jar\u0027. Neither fingerprint \u00270f4448f25c75977646b233aae0816a87040f8cd8\u0027 nor symbolic name \u0027liplisandroid\u0027 are known."
+  },
+  "C:\\AndroidSDK\\sdk\\platforms\\android-16\\android.jar": {
+    "location": "C:\\AndroidSDK\\sdk\\platforms\\android-16\\android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\AndroidSDK\\sdk\\platforms\\android-16\\android.jar\u0027. Neither fingerprint \u002747ffff881d2fe54d5c646fcc3a646bf291008448\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisSmallApp\\src": {
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisSmallApp\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisSmallApp\\src\u0027. Skipped."
+  }
+}

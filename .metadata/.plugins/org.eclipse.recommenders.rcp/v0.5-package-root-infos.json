@@ -1,0 +1,158 @@
+[
+  {
+    "symbolicName": "annotations",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "2db301669e463cda87a20e0701f5e99757ca60be",
+    "jarFileModificationDate": "2014-06-09T22:23:15.875+09:00",
+    "location": "C:\\AndroidSDK\\sdk\\tools\\support\\annotations.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "com.google.gson",
+    "version": {
+      "major": 2,
+      "minor": 2,
+      "micro": 2,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "53bfcd3c8e310d1493b2691484525ed90b04e236",
+    "jarFileModificationDate": "2013-03-01T21:07:29.936+09:00",
+    "location": "D:\\PrjEclipse\\Lib\\google-gson-2.2.2\\gson-2.2.2.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "gson-2.2.2-javadoc",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "0e1d35feabcb2624d969a01c9d3f2733729ff113",
+    "jarFileModificationDate": "2013-03-02T07:56:59.166+09:00",
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\libs\\gson-2.2.2-javadoc.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "com.google.gson",
+    "version": {
+      "major": 2,
+      "minor": 2,
+      "micro": 2,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "53bfcd3c8e310d1493b2691484525ed90b04e236",
+    "jarFileModificationDate": "2013-03-02T07:56:59.163+09:00",
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\libs\\gson-2.2.2.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "com.sony.smallapp",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "7aff97a42565296c21fff6cc3cedbd2555c1872e",
+    "jarFileModificationDate": "2013-07-19T06:48:45.113+09:00",
+    "location": "Z:\\MyWork\\プログラミング\\SonySdk\\libs\\com.sony.smallapp.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "android",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "47ffff881d2fe54d5c646fcc3a646bf291008448",
+    "jarFileModificationDate": "2014-06-09T22:35:26.944+09:00",
+    "location": "C:\\AndroidSDK\\sdk\\platforms\\android-16\\android.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "gson-2.2.2-sources",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "d9e0944251e58af3dc984cb183a66ed6ce7163bd",
+    "jarFileModificationDate": "2013-03-02T07:56:59.168+09:00",
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\libs\\gson-2.2.2-sources.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "org.twitter4j.twitter4j-core",
+    "version": {
+      "major": 4,
+      "minor": 0,
+      "micro": 2,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "381cf31e9200c2902782f17248d2af18e2ab4c56",
+    "jarFileModificationDate": "2014-07-08T21:26:17.630+09:00",
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\libs\\twitter4j-core-4.0.2.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "gson-2.2.2-sources",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "d9e0944251e58af3dc984cb183a66ed6ce7163bd",
+    "jarFileModificationDate": "2013-03-01T21:07:30.061+09:00",
+    "location": "D:\\PrjEclipse\\Lib\\google-gson-2.2.2\\gson-2.2.2-sources.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "liplisandroid",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "27d8dc9c918b0fc5c2d8228753e94b016cf9e445",
+    "jarFileModificationDate": "2015-06-27T07:38:31.708+09:00",
+    "location": "D:\\PrjEclipse\\LiplisAndroidRenew\\LiplisAndroid\\bin\\liplisandroid.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "android",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "957fde040ce9e3310b6ea179006ac4fdd6aa52ae",
+    "jarFileModificationDate": "2014-06-09T22:44:06.205+09:00",
+    "location": "C:\\AndroidSDK\\sdk\\platforms\\android-4\\android.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "gson-2.2.2-javadoc",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "0e1d35feabcb2624d969a01c9d3f2733729ff113",
+    "jarFileModificationDate": "2013-03-01T21:07:30.358+09:00",
+    "location": "D:\\PrjEclipse\\Lib\\google-gson-2.2.2\\gson-2.2.2-javadoc.jar",
+    "javaRuntime": false
+  }
+]
